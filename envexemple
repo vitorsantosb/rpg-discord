@@ -6,3 +6,6 @@ DB_NAME=
 
 /*Discord Token*/
 Token=
+
+/* Authorization token*/
+Authorization=
