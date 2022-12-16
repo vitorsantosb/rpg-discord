@@ -1,0 +1,8 @@
+/*Data base config*/
+DB_HOST=
+DB_NAME=
+DB_PASSWORD=
+DB_NAME=
+
+/*Discord Token*/
+Token=
