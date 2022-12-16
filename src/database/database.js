@@ -7,7 +7,7 @@ function getConnection(){
 
 async function init(){
     return new Promise((res, rej ) =>{
-        console.log("initilizing...");
+        console.log("initilizing... database");
         const mysql = require("mysql");
         const con = mysql.createConnection({
             host: process.env.DB_HOST,
