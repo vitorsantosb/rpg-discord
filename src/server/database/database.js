@@ -5,7 +5,7 @@ function getConnection(){
     return connection;
 }
 
-async function init(){
+async function initDatabase(){
     return new Promise((res, rej ) =>{
         console.log("initilizing... database");
         const mysql = require("mysql");
@@ -46,4 +46,4 @@ async function execute(query, values) {
     });
 }
 
-module.exports = { init, execute }
+module.exports = { initDatabase, execute }

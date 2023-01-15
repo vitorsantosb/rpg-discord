@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../css/modalwindow.css" rel="stylesheet">
+    <title>Ficha Main Page</title>
+</head>
+<body>
+<div>
+    <div class="header">
+        <h1>FICHA PERSONAGEM</h1>
+    </div>
+
+    <form class="form">
+        <div class="atributs-container-left">
+            <fieldset>
+                <div class="form-group">
+                    <label for="player-name">Jogador</label>
+                    <input class="form-control" id="player-name" name="name" placeholder="Nome do Jogador" required type="text">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-name">Nome</label>
+                    <input class="form-control" id="caracter-name" name="name" placeholder="Nome do Personagem" required type="text">
+                </div>
+                <div class="form-group">
+                    <label for="idade">Idade</label>
+                    <input class="form-control" id="idade" name="age" placeholder="Idade de seu personagem" required type="number">
+                </div>
+                <div class="form-group">
+                    <label for="height">Altura</label>
+                    <input class="form-control" id="height" name="Heigth" placeholder="Altura de seu personagem" required type="number">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-class">Classe</label>
+                    <input class="form-control" id="caracter-class" name="class" placeholder="Qual a sua Classe?" required type="text">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-raca">Raça</label>
+                    <input class="form-control" id="caracter-raca" name="race" placeholder="Qual a sua raça ?" required type="text">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-health">Pontos de Vida</label>
+                    <input class="form-control" id="caracter-health" name="health" placeholder="Vida de seu personagem" required type="number">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-mp">Mana</label>
+                    <input class="form-control" id="caracter-mp" name="mp" placeholder="Mana de seu personagem" required type="number">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-stamina">Stamina</label>
+                    <input class="form-control" id="caracter-stamina" name="stamina" placeholder="Estamina de seu personagem" required type="number">
+                </div>
+                <div class="form-group">
+                    <label for="caracter-sanity">Sanidade</label>
+                    <input class="form-control" id="caracter-sanity" name="sanity" placeholder="Sanidade" required type="number">
+                </div>
+                <div class="form-group">
+                    <label class="picture" for="picture__input" tabIndex="0">
+                        <span class="picture__image">Imagem do personagem</span>
+                    </label>
+
+                    <input id="picture__input" name="picture__input" type="file">
+                    <script src="./javascript/uploadImage.js"></script>
+                </div>
+            </fieldset>
+        </div>
+        <div class="atributs-container-left">
+            <h1>Atributos</h1>
+            <fieldset>
+                <div class="form-group-right">
+                    <div>
+                        <label for="strength">Força</label>
+                        <input class="form-control" id="strength" name="strength" placeholder="Sua força" required type="number">
+                    </div>
+                    <div>
+                        <label for="dexterity">Destreza</label>
+                        <input class="form-control" id="dexterity" name="dexterity" placeholder="Sua destreza" required type="number">
+                    </div>
+                    <div>
+                        <label for="intelligence">Inteligência</label>
+                        <input class="form-control" id="intelligence" name="strength" placeholder="Seu poder Mágico" required type="number">
+                    </div>
+                    <div>
+                        <label for="wisdom">Sabedoria</label>
+                        <input class="form-control" id="wisdom" name="wisdom" placeholder="Sabedoria" required type="number">
+                    </div>
+                    <div>
+                        <label for="perception">Percepção</label>
+                        <input class="form-control" id="perception" name="perception" placeholder="Sua percepção" required type="number">
+                    </div>
+                    <div>
+                        <label for="charism">Carisma</label>
+                        <input class="form-control" id="charism" name="charism" placeholder="Sua carisma" required type="number">
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group-right">
+                <div>
+                    <h1>Pericias</h1>
+                    <fieldset>
+                        <div>
+                            <label for="acrobacia">Acrobacia(Destreza)</label>
+                            <select id="acrobacia" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="adestra-animais">Adestrar animais(Carisma)</label>
+                            <select id="adestra-animais" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="atletismo">Atletismo(Força)</label>
+                            <select id="atletismo" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="atuacao">Atuação(Carisma)</label>
+                            <select id="atuacao" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="cavalgar">Cavalgar(Destreza)</label>
+                            <select id="cavalgar" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="conhecimento">Conhecimento(Sabedoria)</label>
+                            <select id="conhecimento" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="cura">Cura(Sabedoria)</label>
+                            <select id="cura" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="diplomacia">Diplomacia(Carisma)</label>
+                            <select id="diplomacia" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="enganacao">Enganação(Carisma)</label>
+                            <select id="enganacao" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="furtividade">Furtividade(Destreza)</label>
+                            <select id="furtividade" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="identificar-magia">Identificar Magia(Inteligencia)</label>
+                            <select id="identificar-magia" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="iniciativa">Iniciativa(Destreza)</label>
+                            <select id="iniciativa" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="intimidacao">Intimidação(Carisma)</label>
+                            <select id="intimidacao" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="intuicao">Intuição(Sabedoria)</label>
+                            <select id="intuicao" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="jogatina">Jogatina(Carisma)</label>
+                            <select id="jogatina" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="ladinagem">Ladinagem(Destreza)</label>
+                            <select id="ladinagem" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="obter-informacao">Obter Informação(Carisma)</label>
+                            <select id="obter-informacao" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="oficio">Oficio(Inteligência)</label>
+                            <select id="oficio" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="percepcao">Percepção(Sabedoria)</label>
+                            <select id="percepcao" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="sobrevivencia">Sobrevivencia(Sabedoria)</label>
+                            <select id="sobrevivencia" name="">
+                                <option disabled selected value>Escolha um*</option>
+                                <option value="treinado">Treinado</option>
+                                <option value="competente">Competente</option>
+                                <option value="expert">Profissional</option>
+                            </select>
+                        </div>
+                    </fieldset>
+                </div>
+                <h1>Equipamentos</h1>
+                <fieldset>
+                    <div class="player-equipment">
+                        <div class="equipment">
+                            <label for="helmet">Capacete</label>
+                            <input accept="image/*" alt="capacete" class="equipment-input" id="helmet" name="helmet" type="file">
+                            <label for="helmet-status">Redução de Dano</label>
+                            <input class="equipment-input" id="helmet-status" name="helmet" type="number">
+                            <label for="helmet-description">Capacete Descrição</label>
+                            <input class="equipment-input" id="helmet-description" name="helmet" type="text">
+                        </div>
+                    </div>
+                    <div class="player-equipment">
+                        <div class="equipment">
+                            <label for="gauntlet">Manopla</label>
+                            <input accept="image/*" alt="manopla" class="equipment-input" id="gauntlet" name="helmet" type="file">
+                            <label for="gauntlet-status">Redução de Dano</label>
+                            <input class="equipment-input" id="gauntlet-status" name="helmet" type="number">
+                            <label for="gauntlet-description">Manopla Descrição</label>
+                            <input class="equipment-input" id="gauntlet-description" name="helmet" type="text">
+                        </div>
+                    </div>
+                    <div class="player-equipment">
+                        <div class="equipment">
+                            <label for="chest">Peitoral</label>
+                            <input accept="image/*" alt="peitoral" class="equipment-input" id="chest" name="helmet" type="file">
+                            <label for="chest-status">Redução de Dano</label>
+                            <input class="equipment-input" id="chest-status" name="helmet" type="number">
+                            <label for="chest-description">Peitoral Descrição</label>
+                            <input class="chest-input" id="chest-description" name="helmet" type="text">
+                        </div>
+                    </div>
+                    <div class="player-equipment">
+                        <div class="equipment">
+                            <label for="boots">Botas</label>
+                            <input accept="image/*" alt="botas" class="equipment-input" id="boots" name="helmet" type="file">
+                            <label for="boots-status">Redução de Dano</label>
+                            <input class="equipment-input" id="boots-status" name="helmet" type="number">
+                            <label for="boots-description">Botas Descrição</label>
+                            <input class="chest-input" id="boots-description" name="helmet" type="text">
+                        </div>
+                    </div>
+                    <div class="player-equipment">
+                        <div class="equipment">
+                            <label for="ring-1">Anel 1</label>
+                            <input accept="image/*" alt="anel" class="equipment-input" id="ring-1" name="helmet" type="file">
+                            <label for="ring-1-status">Bônus</label>
+                            <input class="equipment-input" id="ring-1-status" name="helmet" type="number">
+                            <label for="ring-1-description">Descrição do Anel</label>
+                            <input class="chest-input" id="ring-1-description" name="helmet" type="text">
+                        </div>
+                    </div>
+                    <div class="player-equipment">
+                        <div class="equipment">
+                            <label for="ring-2">Anel 2</label>
+                            <input accept="image/*" alt="anel" class="equipment-input" id="ring-2" name="helmet" type="file">
+                            <label for="ring-2-status">Bônus</label>
+                            <input class="equipment-input" id="ring-2-status" name="helmet" type="number">
+                            <label for="ring-2-description">Descrição do Anel</label>
+                            <input class="chest-input" id="ring-2-description" name="helmet" type="text">
+                        </div>
+                    </div>
+                    <div class="player-equipment">
+                        <label for="player-weapon-image">Arma Primaria</label>
+                        <input accept="image/*" alt="weapon.img" id="player-weapon-image" name="weapon" type="file">
+                        <select id="player-weapon" name="">
+                            <option disabled selected value>Escolha um*</option>
+                            <option value="greatSword">Espada de Duas mãos</option>
+                            <option value="katana">Katana</option>
+                            <option value="sword">Espada de uma mão</option>
+                            <option value="axe">Machado</option>
+                            <option value="two-hand-hammer">Martelo de duas mãos</option>
+                            <option value="two-daggers">Par de adagas</option>
+                        </select>
+                    </div>
+                    <div class="player-equipment">
+                        <label for="player-weapon2-image">Arma Secundaria</label>
+                        <input accept="image/*" alt="weapon.img" id="player-weapon2-image" name="weapon" type="file">
+                        <select id="player-weapon2" name="">
+                            <option disabled selected value>Escolha um*</option>
+                            <option value="greatSword">Espada de Duas mãos</option>
+                            <option value="katana">Katana</option>
+                            <option value="sword">Espada de uma mão</option>
+                            <option value="axe">Machado</option>
+                            <option value="two-hand-hammer">Martelo de duas mãos</option>
+                            <option value="two-daggers">Par de adagas</option>
+                        </select>
+                    </div>
+                </fieldset>
+                <div>
+                    <div class="player-inventory">
+                        <img class="bag-img" alt="bag" src="../assets/icons/bag-icon.png">
+                        <button class="invetory-button" onclick="">Inventário</button>
+
+                        <div class="modal-window" id="open-inventory">
+                            <button class="modal-close-inventory" onclick="">Sair</button>
+                            <div class="modal-content">
+                                <fieldset>
+                                    <div>
+                                        <h1>Player Inventory</h1>
+                                        <div class="inventory-player">
+                                            <p>Guarde aqui todos os itens coletados em missões. Lembre-se todos os itens guardados aqui dentro seram visiveis ao
+                                                mestre. NÃO coloque itens que não recebeu, sujeito a punição pelo mestre.</p>
+                                            <div>
+                                                <label for="inventory-gold">Ouro/Gold</label>
+                                                <input id="inventory-gold" placeholder="Gold" type="number">
+                                            </div>
+                                            <div>
+                                                <label for="quest-number">Quests</label>
+                                                <input id="quest-number" type="number" placeholder="Quests feitas">
+                                            </div>
+                                        </div>
+                                        <div class="modal-window-textarea">
+                                            <p>Itens provenientes de sua estória</p>
+                                            <textarea placeholder="Digite aqui os itens que são provenientes de sua estória de personagem"></textarea>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-dices">
+                        <button>Dados</button>
+                        <img class="dice-img" alt="dice" src="../assets/icons/dices.png">
+                        <div class="modal-window">
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
