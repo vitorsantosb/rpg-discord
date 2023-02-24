@@ -1,12 +1,11 @@
 const sequelize = require("sequelize");
 const db = require("../database/database.js");
 
-var Administrador = db.define(
-    "Administrador",
+var guild = db.define(
+    "guild",
     {
-        id: { type: sequelize.INTEGER, primaryKey: true },
-        username: { type: sequelize.STRING },
-        password: {type: sequelize.STRING},
+        guild_id: { type: sequelize.INTEGER, primaryKey: true },
+        guild_name: { type: sequelize.STRING },
     },
     {
         // freeze name table not using *s on name

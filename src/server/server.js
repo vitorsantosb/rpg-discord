@@ -1,5 +1,5 @@
 const http = require("http");
-const app = require("../routes/app");
+const app = require("../server/database/database.js");
 require("dotenv").config();
 
 const port = process.env.SERVER_PORT || 50;

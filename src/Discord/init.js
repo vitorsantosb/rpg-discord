@@ -35,6 +35,14 @@ async function discordInitialize() {
     client.login(token);
 }
 
-module.exports = { discordInitialize };
+
+module.exports = { 
+    name: "discord_init",
+
+    execute: async function(){
+        console.log("[Discord] Initialize Discord Script");
+        await discordInitialize();
+    }
+};
 
 
