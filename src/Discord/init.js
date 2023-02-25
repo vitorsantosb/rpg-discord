@@ -7,7 +7,7 @@ const path = require('node:path');
 
 async function getCommandList() {
     const commandsPath = path.join(__dirname, "commands");
-    const commandFiles = fs.readFileSync(commandsPath).filter(file => file.endsWith(".js"));
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
     console.log(commandFiles);
 }
 
