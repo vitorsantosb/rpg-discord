@@ -20,6 +20,7 @@ module.exports = {
         .addIntegerOption(option => option.setName('min_value').setDescription('Minimal value for get a sucess in your dice!').setRequired(false)),
 
     async execute(interaction) {
+
         const dice = interaction.options.getString('dices');
         const modifier = interaction.options.getInteger('modifier');
         const rolls = interaction.options.getInteger('rolls');
@@ -36,9 +37,8 @@ module.exports = {
             let result = Math.floor(Math.random() * dice + 1);
 
             if (modifier > 0) result += modifier;
-            
+
             if (minValue != null) {
-                console.log(minValue);
                 if (result >= minValue) {
                     results.push(" | " + result + " | ")
                 }
