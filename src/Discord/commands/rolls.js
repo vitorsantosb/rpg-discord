@@ -26,7 +26,6 @@ module.exports = {
         const rolls = interaction.options.getInteger('rolls');
         const minValue = interaction.options.getInteger('min_value');
 
-
         let results = [];
 
         if (rolls == 0) {

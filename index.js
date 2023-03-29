@@ -9,4 +9,6 @@ async function init() {
     //await initDatabase();
 }
 
-init();
+init().catch(function(err){
+    console.log(err);
+});
