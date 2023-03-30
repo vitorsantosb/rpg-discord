@@ -66,7 +66,3 @@ module.exports = {
 
 	},
 };
-//const user_id = interation.user.id;
-//const {user} = interation
-//const user_id = user.id;
-//interation.user.id
