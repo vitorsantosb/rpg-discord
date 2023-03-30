@@ -29,7 +29,7 @@ function GetDatabase() {
 }
 
 function SaveDatabase(db) {
-	fs.writeFile('data.json', JSON.stringify(db, null, 2))
+	fs.writeFile('data.json', JSON.stringify(db, null, 2));
 }
 
 async function FetchUserDataById(user_id) {
