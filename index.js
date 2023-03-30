@@ -1,20 +1,14 @@
-const {Client, Events, GatewayIntentBits} = require("discord.js");
-const { init } = require("./src/database/database.js");
-require('dotenv').config();
+const { initDiscord } = require("./src/Discord/init");
+const { initDatabase } = require("./src/server/database/database");
+const { init_routes } = require("./src/server/server");
 
+async function init() {
+    
+    await init_routes();
+    await initDiscord();
+    //await initDatabase();
+}
 
-const token = process.env.TOKEN;
-
-const client = new Client({intents: [GatewayIntentBits.Guilds]});
-
-const commands = new Map();
-
-const preCommands = [
-    require('./src/command/ping.js'),
-];
-
-client.once(Events.ClientReady, c=>{
-    console.log(`Ready! Logged in as ${c.user.tag}` );
+init().catch(function(err){
+    console.log(err);
 });
-
-client.login(token);

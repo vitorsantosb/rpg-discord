@@ -39,8 +39,8 @@ npm install
 
 # Mudanças e coisas a serem discutidas
   - Reformulação dos comandos no bot;
-    - Criar uma ficha - (!creatUser (nome do personagem))
-    - Deleta uma ficha -(!deletUser (nome do personagem))
+    - Criar uma ficha - (!createUser (nome do personagem))
+    - Deleta uma ficha -(!deleteUser (nome do personagem))
     - Definir Mestrante's -(!setGameMaster @mention)
     - Informação de usuário -(!userInfo @usermention)
     - Rolagem de dados - (!roll d(Qualquer valor entre 2 e 100))

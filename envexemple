@@ -5,7 +5,7 @@ DB_PASSWORD=
 DB_NAME=
 
 /*Discord Token*/
-Token=
+TOKEN=
 
 /* Authorization token*/
 Authorization=
