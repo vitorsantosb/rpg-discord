@@ -1,10 +1,10 @@
 const { SlashCommandBuilder, User, Guild, Client } = require('discord.js');
-const fs = require('fs').promises;
-
+const db = require("../../lib/database/database.js");
+const user_repository = require("../../Discord/repositories/user.repository.js");
 
 
 async function Register(user, guild) {
-	const db = GetDatabase();
+	const rows = await db.GetDatabase();
 
 	const user_input = {
 		user,
@@ -14,38 +14,9 @@ async function Register(user, guild) {
 		updatedAt: null,
 	};
 
-	AddNewUser(db, user_input);
-
-	SaveDatabase(db);
+	await user_repository.AddNewUser(user_input, rows);
 
 	return user_input;
-}
-
-function GetDatabase() {
-	const file_data = require("../../../data.json");
-	const rows = JSON.parse(JSON.stringify(file_data));
-
-	return rows;
-}
-
-function SaveDatabase(db) {
-	fs.writeFile('data.json', JSON.stringify(db, null, 2))
-}
-
-async function FetchUserDataById(user_id) {
-	const rows = GetDatabase();
-
-	for (const row of rows) {
-		if (row.user.id == user_id) {
-			console.log("This user is alredy register!")
-			return true;
-		}
-	}
-}
-
-function AddNewUser(db, user) {
-	db.push(user);
-	return db;
 }
 
 module.exports = {
@@ -56,7 +27,7 @@ module.exports = {
 	async execute(interaction) {
 		const { user, guild } = interaction;
 
-		if (await FetchUserDataById(user.id)) {
+		if (await user_repository.FetchUserDataById(user.id)) {
 			interaction.reply("Alredy Registered!");
 			return;
 		}
