@@ -1,0 +1,10 @@
+.git
+.gitignore
+.env
+/.idea
+.env
+.env.staging
+.env.production
+docker-compose.override.yml
+docker-compose.yml
+/node_modules

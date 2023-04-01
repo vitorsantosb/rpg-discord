@@ -1,0 +1,52 @@
+version: '3'
+services:
+  bot:
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: node-18.14/rpg-discord-bot
+    ports:
+      - '${APP_PORT:-5000}:5000'
+
+    volumes:
+      - '.:/usr/src/bot'
+    networks:
+      - rpg-bot
+    depends_on:
+      - mongodb
+
+#  redis:
+#    image: 'redis:alpine'
+#    ports:
+#      - '${FORWARD_REDIS_PORT:-6379}:6379'
+#    volumes:
+#      - 'rpg-bot-redis:/data'
+#    networks:
+#      - sail
+#    healthcheck:
+#      test: ["CMD", "redis-cli", "ping"]
+#      retries: 3
+#      timeout: 5s
+
+  mongodb:
+    volumes:
+      - 'rgp-bot-mongo:/data/db'
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: '${MONGODB_USERNAME:-mongo}'
+      MONGO_INITDB_ROOT_PASSWORD: '${MONGODB_PASSWORD:-mongo}'
+    ports:
+      - '27017:27017'
+    networks:
+      - rpg-bot
+
+networks:
+  rpg-bot:
+    driver: bridge
+volumes:
+  rpg-bot-redis:
+    driver: local
+  rgp-bot-mongo:
+    driver: local
