@@ -22,7 +22,7 @@ function loadCommands(client){
     }
 }
 
-async function initDiscord() {
+async function initCommands() {
     
     const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
     client.commands = new Collection();
@@ -59,7 +59,7 @@ async function initDiscord() {
     });
 }
 
-module.exports = { initDiscord }
+module.exports = { initCommands }
 
 
 
