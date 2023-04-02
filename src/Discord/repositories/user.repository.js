@@ -1,36 +1,45 @@
-const db = require("../../lib/database/database.js");
+const { GetDatabase } = require("../database/db");
 
+async function DeleteUserById(userId) {
+	const {collections} = await GetDatabase();
 
-async function DeleteUserById(user_id) {
-    let rows = await db.GetDatabase();
-
-    const user_index = rows.findIndex(row => row.user.id == user_id);
-
-    if (user_index > -1) {
-        rows.splice(user_index, 1);
-    }
-
-    await db.SaveDatabase(rows);
-
+	return collections.users.remove({"user.id": userId});
 }
 
-async function FetchUserDataById(user_id) {
-    const rows = await db.GetDatabase();
+async function UserExistsById(userId) {
+	const {collections} = await GetDatabase();
 
-    for (const row of rows) {
-        if (row.user.id == user_id) {
-            return true;
-        }
-    }
-
-    return false;
+	return collections.users.countDocuments({"user.id": userId}, {"_id" : 1});
 }
 
-async function AddNewUser(user, rows) {
+async function FetchUserDataById(userId) {
+	const {collections} = await GetDatabase();
 
-    rows.push(user);
-
-    await db.SaveDatabase(rows);
+	return collections.users.findOne({"user.id": userId});
 }
 
-module.exports = { DeleteUserById, FetchUserDataById, AddNewUser }
+async function StoreUser(user) {
+	const {collections} = await GetDatabase();
+
+	return collections.users.insertOne(
+		JSON.parse(JSON.stringify(user))
+	);
+}
+
+async function SaveDiceHistory(userId, diceRoll) {
+	const {collections} = await GetDatabase();
+
+	return collections.users.updateOne({"user.id": userId}, {
+		$push: {
+			"rolls": {
+				$each: [diceRoll], 
+				$slice: -10
+			}
+		}
+	});
+}
+
+module.exports = {
+	DeleteUserById, FetchUserDataById, StoreUser, UserExistsById,
+	SaveDiceHistory
+};
