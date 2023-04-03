@@ -5,6 +5,7 @@ const {StoreUser, UserExistsById} = require('../../Discord/repositories/user.rep
 async function Register(user, guild) {
 	const userInput = {
 		user,
+		isGameMaster: false,
 		guild,
 
 		createdAt: Date(),
@@ -16,6 +17,7 @@ async function Register(user, guild) {
 	return userInput;
 }
 
+// eslint-disable-next-line no-undef
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('register')
