@@ -42,7 +42,7 @@ async function initCommands() {
 	client.commands = new Collection();
     
 	loadCommands(client);
-	LoadEvents(client);
+	await LoadEvents(client);
 
 	client.login(token);
 }
