@@ -25,6 +25,15 @@ async function StoreUser(user) {
 		JSON.parse(JSON.stringify(user))
 	);
 }
+async function UpdateUserForGameMaster(user_id, isEnable){
+	const {collections} = await GetDatabase();
+
+	return collections.users.updateOne({'user.id': user_id}, {
+		$set:{
+			'isGameMaster': isEnable
+		}
+	});
+}
 
 async function SaveDiceHistory(userId, diceRoll) {
 	const {collections} = await GetDatabase();
@@ -39,7 +48,8 @@ async function SaveDiceHistory(userId, diceRoll) {
 	});
 }
 
+// eslint-disable-next-line no-undef
 module.exports = {
 	DeleteUserById, FetchUserDataById, StoreUser, UserExistsById,
-	SaveDiceHistory
+	SaveDiceHistory, UpdateUserForGameMaster
 };
