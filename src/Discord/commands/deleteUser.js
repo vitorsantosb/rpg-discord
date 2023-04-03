@@ -5,7 +5,7 @@ const {UserExistsById, DeleteUserById} = require('../../Discord/repositories/use
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('delete')
-		.setDescription('delete user with metion')
+		.setDescription('delete user with mention')
 		.addMentionableOption(option =>
 			option.setName('user')
 				.setDescription('The user you want to say hello to.')
