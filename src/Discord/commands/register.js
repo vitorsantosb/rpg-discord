@@ -5,7 +5,6 @@ const {StoreUser, UserExistsById} = require('../../Discord/repositories/user.rep
 async function Register(user, guild) {
 	const userInput = {
 		user,
-		isGameMaster: false,
 		guild,
 
 		createdAt: Date(),
