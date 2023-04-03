@@ -1,4 +1,4 @@
-const { MongoClient, Collection } = require("mongodb");
+const { MongoClient, Collection } = require('mongodb');
 
 const url = process.env.MONGO_URI;
 const client = new MongoClient(url);
@@ -14,15 +14,15 @@ const database = {
 
 async function mountCollections (db) {
 	return {
-		users: db.collection("users"),
-		sessions: db.collection("sessions"),
+		users: db.collection('users'),
+		sessions: db.collection('sessions'),
 	};
 }
 
 async function GetDatabase () {
 	if (!database.connection) {
 		database.connection = await client.connect();
-		database.db = client.db("rpg-bot");
+		database.db = client.db('rpg-bot');
 	}
 
 	database.collections = await mountCollections(database.db);

@@ -1,21 +1,21 @@
-const { GetDatabase } = require("../database/db");
+const { GetDatabase } = require('../database/db');
 
 async function DeleteUserById(userId) {
 	const {collections} = await GetDatabase();
 
-	return collections.users.remove({"user.id": userId});
+	return collections.users.remove({'user.id': userId});
 }
 
 async function UserExistsById(userId) {
 	const {collections} = await GetDatabase();
 
-	return collections.users.countDocuments({"user.id": userId}, {"_id" : 1});
+	return collections.users.countDocuments({'user.id': userId}, {'_id' : 1});
 }
 
 async function FetchUserDataById(userId) {
 	const {collections} = await GetDatabase();
 
-	return collections.users.findOne({"user.id": userId});
+	return collections.users.findOne({'user.id': userId});
 }
 
 async function StoreUser(user) {
@@ -29,9 +29,9 @@ async function StoreUser(user) {
 async function SaveDiceHistory(userId, diceRoll) {
 	const {collections} = await GetDatabase();
 
-	return collections.users.updateOne({"user.id": userId}, {
+	return collections.users.updateOne({'user.id': userId}, {
 		$push: {
-			"rolls": {
+			'rolls': {
 				$each: [diceRoll], 
 				$slice: -10
 			}

@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es2021": true
+        "es2021": true,
+        "node": true
     },
     "extends": "eslint:recommended",
     "overrides": [
@@ -17,11 +18,11 @@
         ],
         "linebreak-style": [
             "error",
-            "windows"
+            "unix"
         ],
         "quotes": [
             "error",
-            "double"
+            "single"
         ],
         "semi": [
             "error",
