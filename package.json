@@ -4,7 +4,8 @@
   "description": "rpg discord bot",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "updateCommands": " node ./src/Discord/deploy-command.js"
   },
   "author": "Vitor Batista",
   "license": "MIT",
