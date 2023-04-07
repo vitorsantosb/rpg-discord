@@ -1,5 +1,12 @@
-const {SlashCommandBuilder, PermissionsBitField} = require('discord.js');
-const {ExistsRoleInGuild, CreateRole, AssignRoleToUser} = require('../repositories/roleManager.repository');
+const {
+	SlashCommandBuilder,
+	PermissionsBitField,
+	ActionRowBuilder,
+	ButtonStyle,
+	ButtonBuilder,
+	EmbedBuilder
+} = require('discord.js');
+
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -7,28 +14,34 @@ module.exports = {
 		.setDescription('Receive a role for manager the bot - Obs: This function is enabled for server owner'),
 
 	execute: async function (interaction) {
-		const {user, guild} = interaction;
-		const roleName = 'RPG-Admin';
+		const row = new ActionRowBuilder()
+			.addComponents(
+				new ButtonBuilder()
+					.setCustomId('command_setup_cancel')
+					.setLabel('Cancel')
+					.setStyle(ButtonStyle.Danger),
 
-		const permissions = [
-			PermissionsBitField.Flags.SendMessages,
-			PermissionsBitField.Flags.KickMembers
-		];
+				new ButtonBuilder()
+					.setCustomId('command_setup_accept')
+					.setLabel('Agree')
+					.setStyle(ButtonStyle.Success),
+			);
+		const buttonIds = ['command_setup_accept', 'command_setup_cancel'];
+		const filter = i => buttonIds.includes(i.customId) && i.user.id === interaction.user.id;
 
-		if (guild.ownerId === user.id) {
+		const collector = interaction.channel.createMessageComponentCollector({filter, time: 15000});
 
-			if (ExistsRoleInGuild(guild, roleName)) {
-				interaction.reply(`You needed delete the role ${roleName}, for continue this command`);
-				return;
-			}
+		collector.on('collect', async () => {
+			row.components[0].setDisabled(true); //disables but_1
+			row.components[1].setDisabled(true); //disables but_2
 
-			await CreateRole(guild, roleName, permissions, '#1965E9');
-			await AssignRoleToUser(interaction, roleName);
+			await interaction.editReply({components: [row]});
+		});
 
-			interaction.reply(`Setup Complete. The server owner ${user.username} receive the role ${roleName}`);
-			return;
-		}
+		const embed = new EmbedBuilder()
+			.setTitle('WARNING')
+			.setDescription('If you execute this command, you are delete the same roles: RPG-Admin, GameMaster, You accept ?');
 
-		interaction.reply('This command can only used by guild owner');
+		interaction.reply({content: 'Setup your bot,', embeds: [embed], components: [row]});
 	}
 };
