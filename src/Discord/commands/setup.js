@@ -1,6 +1,5 @@
 const {
 	SlashCommandBuilder,
-	PermissionsBitField,
 	ActionRowBuilder,
 	ButtonStyle,
 	ButtonBuilder,
@@ -40,7 +39,9 @@ module.exports = {
 
 		const embed = new EmbedBuilder()
 			.setTitle('WARNING')
-			.setDescription('If you execute this command, you are delete the same roles: RPG-Admin, GameMaster, You accept ?');
+			.setDescription('This command requires a set of role names, so it will delete and recreate these roles: RPG-Admin, GameMaster.\n' +
+				'\n' +
+				'Do you accept?');
 
 		interaction.reply({content: 'Setup your bot,', embeds: [embed], components: [row]});
 	}
