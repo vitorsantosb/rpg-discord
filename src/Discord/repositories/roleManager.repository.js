@@ -39,5 +39,10 @@ async function RemoveUserRole(interaction, roleName){
 	}
 }
 
+async function DeleteGuildRole(interaction, roleName){
+	const role = FetchRoleInGuild(interaction, roleName);
 
-module.exports = { CreateRole, ExistsRoleInGuild, AssignRoleToUser, RemoveUserRole, FetchRoleInGuild };
+	return interaction.guild.roles.delete(role.id);
+}
+
+module.exports = { CreateRole, ExistsRoleInGuild, AssignRoleToUser, RemoveUserRole, FetchRoleInGuild, DeleteGuildRole };
