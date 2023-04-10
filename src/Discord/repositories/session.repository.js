@@ -28,4 +28,4 @@ async function CreateSession(interaction){
 }
 
 
-module.exports = {CreateSession, SessionExists}
+module.exports = {CreateSession, SessionExists };
