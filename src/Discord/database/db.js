@@ -16,6 +16,7 @@ async function mountCollections (db) {
 	return {
 		users: db.collection('users'),
 		sessions: db.collection('sessions'),
+		guilds: db.collection('guilds'),
 	};
 }
 
