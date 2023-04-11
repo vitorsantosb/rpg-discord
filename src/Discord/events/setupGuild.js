@@ -6,6 +6,7 @@ const {
 	DeleteGuildRole
 } = require('../repositories/roleManager.repository');
 const {SetupGuildFromInteraction, IsGuildSetupById} = require('../repositories/guild.repository');
+const {Lang} = require('../services/lang');
 
 
 module.exports = {
@@ -13,12 +14,13 @@ module.exports = {
 	async execute(interaction) {
 		if (interaction.isButton()) {
 			const custom_id = interaction.customId;
+			const lang = Lang(interaction).commands.setup;
 
 			if (custom_id === 'command_setup_accept') {
 				const {user, guild} = interaction;
 
 				if(await IsGuildSetupById(guild.id)){
-					return interaction.reply('Guild is already setup');
+					return interaction.reply(lang.setupEvent.isSetup);
 				}
 
 				const ownerRoleName = '[RPG-BOT] Admin';
@@ -48,9 +50,9 @@ module.exports = {
 					]
 				});
 
-				interaction.reply(`Setup Complete. The server owner ${user.username} receive the role ${ownerRoleName}`);
+				interaction.reply(lang.setupEvent.setup_complete_reply(user, ownerRoleName));
 			}else if(custom_id === 'command_setup_cancel'){
-				interaction.reply('Operation canceled');
+				interaction.reply(lang.setupEvent.cancel_setup);
 			}
 
 		}

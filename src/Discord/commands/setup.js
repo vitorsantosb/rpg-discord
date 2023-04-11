@@ -1,10 +1,5 @@
-const {
-	SlashCommandBuilder,
-	ActionRowBuilder,
-	ButtonStyle,
-	ButtonBuilder,
-	EmbedBuilder
-} = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, EmbedBuilder } = require('discord.js');
+const {Lang} = require('../services/lang');
 
 
 module.exports = {
@@ -13,16 +8,18 @@ module.exports = {
 		.setDescription('Receive a role for manager the bot - Obs: This function is enabled for server owner'),
 
 	execute: async function (interaction) {
+		const lang = Lang(interaction).commands.setup;
+
 		const row = new ActionRowBuilder()
 			.addComponents(
 				new ButtonBuilder()
 					.setCustomId('command_setup_cancel')
-					.setLabel('Cancel')
+					.setLabel(lang.labels.command_setup_cancel)
 					.setStyle(ButtonStyle.Danger),
 
 				new ButtonBuilder()
 					.setCustomId('command_setup_accept')
-					.setLabel('Agree')
+					.setLabel(lang.labels.command_setup_accept)
 					.setStyle(ButtonStyle.Success),
 			);
 		const buttonIds = ['command_setup_accept', 'command_setup_cancel'];
@@ -38,11 +35,9 @@ module.exports = {
 		});
 
 		const embed = new EmbedBuilder()
-			.setTitle('WARNING')
-			.setDescription('This command requires a set of role names, so it will delete and recreate these roles: RPG-Admin, GameMaster.\n' +
-				'\n' +
-				'Do you accept?');
+			.setTitle(lang.warning.title)
+			.setDescription(lang.warning.description(['[RPG-BOT] Admin', '[RPG-BOT] GameMaster'].join(', ')))
 
-		interaction.reply({content: 'Setup your bot,', embeds: [embed], components: [row]});
+		interaction.reply({content: lang.reply, embeds: [embed], components: [row]});
 	}
 };
