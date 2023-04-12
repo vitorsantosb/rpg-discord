@@ -34,4 +34,10 @@ function Lang(interaction) {
 	return LangMap.get(interaction.locale);
 }
 
-module.exports = {SetupLangFiles, Lang};
+function ResolveLangs(resolver){
+	const files = Array.from(LangMap.values());
+
+	return files.map(resolver);
+}
+
+module.exports = {SetupLangFiles, Lang, ResolveLangs};

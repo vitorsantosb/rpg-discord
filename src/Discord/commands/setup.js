@@ -1,11 +1,16 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, EmbedBuilder } = require('discord.js');
 const {Lang} = require('../services/lang');
+const {AddTranslations} = require('../services/command.service');
 
+
+let command =  new SlashCommandBuilder()
+	.setName('setup')
+	.setDescription('Receive a role for manager the bot - Obs: This function is enabled for server owner');
+
+command = AddTranslations(command, (lang) => ({name: lang.lang, value: lang?.commands?.setup}));
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('setup')
-		.setDescription('Receive a role for manager the bot - Obs: This function is enabled for server owner'),
+	data: command,
 
 	execute: async function (interaction) {
 		const lang = Lang(interaction).commands.setup;
@@ -36,7 +41,7 @@ module.exports = {
 
 		const embed = new EmbedBuilder()
 			.setTitle(lang.warning.title)
-			.setDescription(lang.warning.description(['[RPG-BOT] Admin', '[RPG-BOT] GameMaster'].join(', ')))
+			.setDescription(lang.warning.description(['[RPG-BOT] Admin', '[RPG-BOT] GameMaster'].join(', ')));
 
 		interaction.reply({content: lang.reply, embeds: [embed], components: [row]});
 	}
