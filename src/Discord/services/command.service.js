@@ -1,14 +1,16 @@
 const {ResolveLangs} = require('./lang');
 
-function AddTranslations(option, langResolver) {
-	const localizations = ResolveLangs(langResolver).reduce((acc, item) => {
+function CreateOptionLocalizations(resolver) {
+	return ResolveLangs(resolver).reduce((acc, item) => {
 		acc.name[item.name] = item.value.name;
 		acc.description[item.name] = item.value.description;
 
 		return acc;
 	}, {name: {}, description: {}});
+}
 
-	console.log(localizations);
+function AddTranslations(option, localizationResolver) {
+	const localizations = CreateOptionLocalizations(localizationResolver);
 
 	return option
 		.setNameLocalizations(localizations.name)

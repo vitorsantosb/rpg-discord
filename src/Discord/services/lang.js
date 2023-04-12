@@ -6,6 +6,8 @@ const langsDirectoryPath = path.resolve(__dirname, '../langs');
 const LangMap = new Map();
 
 async function SetupLangFiles() {
+	console.log('[Lang]: Setup lang files...');
+
 	const files = await fs.readdir(langsDirectoryPath);
 
 	return files
@@ -17,6 +19,9 @@ async function SetupLangFiles() {
 		})
 		.reduce(function (langMap, file) {
 			langMap.set(file.lang, file);
+
+			console.log(`[Lang]: ${file.lang} translation file was loaded`);
+
 			return langMap;
 		}, LangMap);
 }
