@@ -8,14 +8,21 @@ module.exports = {
 		.setName('create_session')
 		.setDescription('Create a RPG session')
 		.addStringOption(option => (
-			option.setName('name')
+			option
+				.setName('name')
 				.setDescription('Name for your session')
 				.setRequired(true)
 		))
 		.addIntegerOption(option => (
-			option.setName('max_members_count')
+			option
+				.setName('max_members_count')
 				.setDescription('members count for your session - MAX: 5')
 				.setRequired(false)
+		))
+		.addBooleanOption(option =>(
+			option
+				.setName('is_public')
+				.setDescription('Your session is public for other members enters or needed invite for join')
 		)),
 
 	async execute(interaction){

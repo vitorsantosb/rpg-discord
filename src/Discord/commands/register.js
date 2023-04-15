@@ -31,6 +31,6 @@ module.exports = {
 		}
 
 		await Register(user, guild);
-		interaction.reply('Register Succesfully!');
+		interaction.reply('Register Successfully!');
 	}
 };

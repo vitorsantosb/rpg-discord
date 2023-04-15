@@ -19,7 +19,7 @@ module.exports = {
 				))
 		.addIntegerOption(option => option.setName('modifier').setDescription('Add modifier for your dice!').setRequired(false))
 		.addIntegerOption(option => option.setName('rolls').setDescription('Number of rolls for your dice. Ex: 2d20, 2d10').setRequired(false))
-		.addIntegerOption(option => option.setName('min_value').setDescription('Minimal value for get a sucess in your dice!').setRequired(false)),
+		.addIntegerOption(option => option.setName('min_value').setDescription('Minimal value for get a success in your dice!').setRequired(false)),
 
 	async execute(interaction) {
 
