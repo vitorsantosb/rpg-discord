@@ -5,8 +5,8 @@ async function SessionExists(interaction, name) {
 	const {collections} = await GetDatabase();
 
 	return collections.sessions.countDocuments({
-		'owner.guild.id': interaction.guild.id,
-		name,
+		'session.owner.guild.id': interaction.guild.id,
+		'session.name': name,
 	}, {'_id': 1});
 }
 
@@ -38,22 +38,18 @@ async function ListGuildSessions(interaction) {
 	return collections.sessions.find({'session.owner.guild.id': interaction.guild.id.toString()}).toArray();
 }
 
-async function ExistsSessionByName(sessionName) {
-	const {collections} = await GetDatabase();
-
-	return collections.sessions.find({'session.name': sessionName});
-}
-
 async function AddUserInSession(user, sessionName) {
 	const {collections} = await GetDatabase();
-	if(await ExistsUserInSession(user, sessionName)) return;
+
 
 	return collections.sessions.updateOne({'session.name': sessionName}, {
-		$set: {'members.$': [user.id]}
+		$push: {
+			'session.members': user.id
+		}
 	});
 }
 
-async function ExistsUserInSession(user, sessionName){
+async function ExistsUserInSession(user, sessionName) {
 	const {collections} = await GetDatabase();
 
 	return collections.sessions.countDocuments({
@@ -62,4 +58,10 @@ async function ExistsUserInSession(user, sessionName){
 	}, {'_id': 1});
 }
 
-module.exports = {CreateSession, SessionExists, ListGuildSessions, AddUserInSession, ExistsSessionByName, ExistsUserInSession};
+module.exports = {
+	CreateSession,
+	SessionExists,
+	ListGuildSessions,
+	AddUserInSession,
+	ExistsUserInSession
+};

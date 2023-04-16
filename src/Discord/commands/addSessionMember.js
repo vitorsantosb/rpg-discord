@@ -1,5 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
-const {AddUserInSession, ExistsSessionByName} = require('../repositories/session.repository');
+const {AddUserInSession, SessionExists} = require('../repositories/session.repository');
 const {GetFullUsername} = require('../services/user.service');
 
 module.exports = {
@@ -23,11 +23,12 @@ module.exports = {
 		const sessionName = interaction.options.getString('session_name');
 		const {user} = interaction.options.getMentionable('user');
 
-		if (await ExistsSessionByName(sessionName)) {
+		if (await SessionExists(interaction, sessionName)) {
+			await AddUserInSession(interaction, user, sessionName);
 
-			await AddUserInSession(user, sessionName);
 			return interaction.reply(`New member ${GetFullUsername(user)} added on session ${sessionName} by GameMaster ${interaction.user.username + '#' + interaction.user.discriminator}`);
 		}
+
 		interaction.reply('Session does not exists');
 	},
 };
