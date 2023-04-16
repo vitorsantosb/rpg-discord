@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonStyle, ButtonBuilder, EmbedBuilder } = require('discord.js');
 const {Lang} = require('../services/lang');
 const {AddTranslations} = require('../services/command.service');
+const {GetRolesName} = require('../services/role.service');
 
 
 let command =  new SlashCommandBuilder()
@@ -41,7 +42,9 @@ module.exports = {
 
 		const embed = new EmbedBuilder()
 			.setTitle(lang.warning.title)
-			.setDescription(lang.warning.description(['[RPG-BOT] Admin', '[RPG-BOT] GameMaster'].join(', ')));
+			.setDescription(lang.warning.description(
+				GetRolesName.join(', ')
+			));
 
 		interaction.reply({content: lang.reply, embeds: [embed], components: [row]});
 	}

@@ -3,5 +3,6 @@
     "name": "Miyuki Shiba",
     "thumbnail": "https://pbs.twimg.com/media/E0LpVwFUUAMsMNE?format=jpg&name=large",
     "embedColor": "#0099FF"
-  }
+  },
+  "roleNamePrefix": "[RPG-BOT]"
 }
