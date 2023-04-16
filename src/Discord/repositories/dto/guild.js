@@ -9,4 +9,8 @@ function CreateGuildData(guild){
 	};
 }
 
-module.exports = { CreateGuildData };
+function CreateBasicGuildRef ({id, name}) {
+	return {id, name}
+}
+
+module.exports = { CreateGuildData, CreateBasicGuildRef };

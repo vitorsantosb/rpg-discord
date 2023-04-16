@@ -1,6 +1,7 @@
 const {SlashCommandBuilder} = require('discord.js');
-const {AddUserInSession, SessionExists} = require('../repositories/session.repository');
+const {AddSessionMember, SessionExists} = require('../repositories/session.repository');
 const {GetFullUsername} = require('../services/user.service');
+const {CreateUserData} = require('../repositories/dto/user');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,7 +25,7 @@ module.exports = {
 		const {user} = interaction.options.getMentionable('user');
 
 		if (await SessionExists(interaction, sessionName)) {
-			await AddUserInSession(interaction, user, sessionName);
+			await AddSessionMember(interaction, user, sessionName);
 
 			return interaction.reply(`New member ${GetFullUsername(user)} added on session ${sessionName} by GameMaster ${interaction.user.username + '#' + interaction.user.discriminator}`);
 		}

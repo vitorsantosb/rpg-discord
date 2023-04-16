@@ -17,7 +17,7 @@ module.exports = {
 			reply: 'Setup your bot',
 			setupEvent: {
 				isSetup: 'Guild is already setup!',
-				setup_complete_reply: (user, ownerRoleName) => `Setup Complete!!. The server owner ${user.username} receive the role ${ownerRoleName} Good Game!!`,
+				setup_complete_reply: (user, ownerRoleName) => `Setup Complete!!. The server owner ${user.username} receive the role "${ownerRoleName}". Good Game!!`,
 				cancel_setup: 'Operation canceled'
 			}
 		},

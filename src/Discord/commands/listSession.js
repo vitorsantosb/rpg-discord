@@ -3,16 +3,9 @@ const {ListGuildSessions} = require('../repositories/session.repository');
 const {GetFullUsername} = require('../services/user.service');
 const {bot} = require('../config/config.json');
 
-
-function CreateEmbedForSession({session}) {
+function CreateEmbedForSession(session) {
 	return new EmbedBuilder()
-		//.setTitle('Imprimindo lista de sessões')
 		.setColor(bot.embedColor)
-		//.setDescription('Lista de sessões do servidor')
-		/*.setAuthor({
-			name: bot.name,
-			iconURL: bot.thumbnail
-		})*/
 		.addFields([
 			{
 				name: 'Sessions',
@@ -30,12 +23,6 @@ function CreateEmbedForSession({session}) {
 				inline: true
 			}
 		]);
-	//.setThumbnail(bot.thumbnail)
-	/*.setFooter({
-			text: bot.name,
-			iconURL: bot.thumbnail
-		});
-		*/
 }
 
 module.exports = {

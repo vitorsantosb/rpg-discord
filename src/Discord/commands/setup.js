@@ -43,7 +43,7 @@ module.exports = {
 		const embed = new EmbedBuilder()
 			.setTitle(lang.warning.title)
 			.setDescription(lang.warning.description(
-				GetRolesName.join(', ')
+				GetRolesName().join(', ')
 			));
 
 		interaction.reply({content: lang.reply, embeds: [embed], components: [row]});

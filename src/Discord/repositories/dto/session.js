@@ -1,22 +1,14 @@
+const {CreateUserData} = require('./user');
 
-function CreateGameMasterFromInteraction(interaction){
+function CreateGameMasterFromInteraction(interaction) {
 	return CreateSessionUserFromInteraction(interaction);
 }
 
-function CreateSessionUserFromInteraction(interaction){
-	return {
-		user:{
-			id: interaction.user.id,
-			username: interaction.user.username,
-			discriminator: interaction.user.discriminator,
-		},
-		guild:{
-			id: interaction.guild.id,
-			name: interaction.guild.name,
-		}
-	};
+function CreateSessionUserFromInteraction(interaction) {
+	return CreateUserData(interaction.user, interaction.guild);
 }
-function CreateSessionMemberFromInteraction(interaction){
+
+function CreateSessionMemberFromInteraction(interaction) {
 	const member = CreateSessionUserFromInteraction(interaction);
 
 	return {
@@ -27,4 +19,4 @@ function CreateSessionMemberFromInteraction(interaction){
 }
 
 
-module.exports = { CreateGameMasterFromInteraction, CreateSessionMemberFromInteraction };
+module.exports = {CreateGameMasterFromInteraction, CreateSessionMemberFromInteraction};
