@@ -1,6 +1,5 @@
 const {SlashCommandBuilder} = require('discord.js');
-const {AddSessionMember, SessionExists, DeleteSessionByName} = require('../repositories/session.repository');
-const {GetFullUsername} = require('../services/user.service');
+const { SessionExists, DeleteSessionByName} = require('../repositories/session.repository');
 
 module.exports = {
 	data: new SlashCommandBuilder()
