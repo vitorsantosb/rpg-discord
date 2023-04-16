@@ -52,6 +52,15 @@ async function AddSessionMember(interaction, user, sessionName) {
 		}
 	});
 }
+async function DeleteSessionByName(guildId, sessionName){
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.deleteOne(
+		{
+			'guild.id': guildId,
+			'name': sessionName
+		});
+}
 
 async function ExistsUserInSession(user, sessionName) {
 	const {collections} = await GetDatabase();
@@ -67,5 +76,6 @@ module.exports = {
 	SessionExists,
 	ListGuildSessions,
 	AddSessionMember,
-	ExistsUserInSession
+	ExistsUserInSession,
+	DeleteSessionByName
 };

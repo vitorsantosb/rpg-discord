@@ -15,8 +15,8 @@ module.exports = {
 		const {user} = interaction.options.getMentionable('user');
 
 
-		if (await UserExistsById(user.id)) {
-			await DeleteUserById(user.id);
+		if (await UserExistsById(user.id, {'guild.id': interaction.guild.id})) {
+			await DeleteUserById(interaction.guild.id, user.id);
 
 			interaction.reply(`User: ${user.username + '#' + user.discriminator} has been deleted by ${interaction.user.username + '#' + interaction.user.discriminator}!`);
 			return;

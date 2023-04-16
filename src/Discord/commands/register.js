@@ -25,7 +25,7 @@ module.exports = {
 	async execute(interaction) {
 		const { user, guild } = interaction;
 
-		if (await UserExistsById(user.id)) {
+		if (await UserExistsById(user.id, {'guild.id': interaction.guild.id})) {
 			interaction.reply('Alredy Registered!');
 			return;
 		}

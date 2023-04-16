@@ -1,15 +1,32 @@
 const { GetDatabase } = require('../database/db');
 
-async function DeleteUserById(userId) {
+/**
+ *
+ * @param userId
+ * @param filter
+ * @returns {Promise<DeleteResult>}
+ * @constructor
+ */
+async function DeleteUserById(userId, filter={}) {
 	const {collections} = await GetDatabase();
 
-	return collections.users.remove({'user.id': userId});
+	return collections.users.deleteOne({
+		'user.id': userId,
+		...filter
+	});
 }
 
-async function UserExistsById(userId) {
+/**
+ *
+ * @param userId
+ * @param filter filter options
+ * @returns {Promise<number>}
+ * @constructor
+ */
+async function UserExistsById(userId, filter={}) {
 	const {collections} = await GetDatabase();
 
-	return collections.users.countDocuments({'user.id': userId}, {'_id' : 1});
+	return collections.users.countDocuments({'user.id': userId, ...filter}, {'_id' : 1});
 }
 
 async function FetchUserDataById(userId) {
