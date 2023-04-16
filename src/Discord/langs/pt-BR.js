@@ -1,3 +1,4 @@
+const {GetFullUsername} = require('../services/user.service');
 module.exports ={
 	lang: 'pt-BR',
 	commands: {
@@ -20,5 +21,72 @@ module.exports ={
 				cancel_setup: 'Processo não permitido'
 			}
 		},
+		register: {
+			name: 'register',
+			description: 'Registre como membro da sua guild para poder participar das sessões!',
+
+			register_reply: {
+				registered: 'Você já está cadastrado!',
+				success: 'Registro feito com Sucesso!',
+			}
+		},
+		bodydice: {
+			name: 'bodydice',
+			description: 'Randomize uma parte do corpo',
+
+			bodyParts: [
+				'Braço Esquerdo',
+				'Braço Direito',
+				'Perna Esquerda',
+				'Perna Direita',
+				'Coluna',
+				'Cabeça',
+				'Thorax'
+			],
+			reply: 'ACERTO: '
+		},
+		rolls: {
+			name: 'roll',
+			description: 'Rolagem de Dados',
+
+			option: {
+				description: 'Selecione um dado',
+				modifier: 'Adicione um modificador ao seu dado!',
+				rolls: 'Numero de rolagens para os dados. Ex: 2d20, 2d10',
+				min_value: 'Valor minimo para garantir um sucesso!'
+			},
+			reply: 'Resultado dos Dados: '
+		},
+		setGameMaster: {
+			name: 'set_gamemaster',
+			description: 'Coloque um membro como Game Master por mention',
+
+			option:{
+				mentionable: {
+					description: 'Mencione um membro para ser Game Master'
+				},
+				boolean: {
+					description: 'É um mestrante ?'
+				},
+			},
+			reply: {
+				game_master_complete: (user, interaction) => `O membro ${GetFullUsername(user)} recebeu o cargo de GameMaster por: ${interaction.user.username + '#' + interaction.user.discriminator}`,
+			}
+		},
+		addSessionMember: {
+			name: 'add_session_member',
+			description: 'Adiciona um membro a uma sessão por mensão',
+
+			option:{
+				mentionable: {
+					description: 'Membro para adicionar a sessão'
+				},
+				boolean: {
+					description: 'Nome da sessão'
+				},
+			},
+			reply_message: (user, sessionName, interaction) => `Novo membro ${GetFullUsername(user)} foi adicionado a sessão ${sessionName} pelo GameMaster ${interaction.user.username + '#' + interaction.user.discriminator}`,
+			reply_fail: 'Sessão não existe',
+		}
 	}
 };
