@@ -4,7 +4,7 @@ const { GetDatabase } = require('../database/db');
  *
  * @param userId
  * @param filter
- * @returns {Promise<DeleteResult>}
+ * @returns {Promise<>}
  * @constructor
  */
 async function DeleteUserById(userId, filter={}) {
