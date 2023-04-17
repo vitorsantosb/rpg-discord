@@ -1,4 +1,3 @@
-const {GetFullUsername} = require('../services/user.service');
 module.exports = {
 	lang: 'en-US',
 	commands: {
