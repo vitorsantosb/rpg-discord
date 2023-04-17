@@ -25,6 +25,7 @@ module.exports = {
 
 				const ownerRoleName = '[RPG-BOT] Admin';
 				const gameMasterRoleName = '[RPG-BOT] GameMaster';
+				const playerRole = '[RPG-BOT] Player';
 
 				const permissions = [
 					PermissionsBitField.Flags.SendMessages,
@@ -39,18 +40,24 @@ module.exports = {
 					await DeleteGuildRole(interaction, gameMasterRoleName);
 				}
 
+				if(ExistsRoleInGuild(guild, playerRole)){
+					await DeleteGuildRole(interaction, playerRole);
+				}
+
 				const gameMasterRole = await CreateRole(guild, gameMasterRoleName, permissions, '#1965E9');
 				const ownerRole = await CreateRole(guild, ownerRoleName, permissions, '#1965E9');
+				const memberRole = await CreateRole(guild, playerRole, permissions, '#1965E9');
 				await AssignRoleToUser(interaction, ownerRoleName);
 
 				await SetupGuildFromInteraction(interaction, {
 					botRolesIds: [
 						gameMasterRole.id,
 						ownerRole.id,
+						memberRole.id,
 					]
 				});
 
-				interaction.reply(lang.setupEvent.setup_complete_reply(user, ownerRoleName));
+				interaction.reply(lang.setupEvent.setup_complete_reply(user.username, ownerRoleName));
 			}else if(custom_id === 'command_setup_cancel'){
 				interaction.reply(lang.setupEvent.cancel_setup);
 			}

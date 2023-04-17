@@ -1,5 +1,7 @@
-const { SlashCommandBuilder } = require('discord.js');
+const {SlashCommandBuilder} = require('discord.js');
 const {StoreUser, UserExistsById} = require('../../Discord/repositories/user.repository.js');
+const {AssignRoleToUser} = require('../repositories/roleManager.repository');
+const {IsGuildSetupById} = require('../repositories/guild.repository');
 
 
 async function Register(user, guild) {
@@ -23,14 +25,20 @@ module.exports = {
 		.setDescription('register your user and guild, this is necessary for create a rpg session'),
 
 	async execute(interaction) {
-		const { user, guild } = interaction;
+		const {user, guild} = interaction;
 
-		if (await UserExistsById(user.id, {'guild.id': interaction.guild.id})) {
-			interaction.reply('Alredy Registered!');
-			return;
+		if (!await IsGuildSetupById(guild.id)) {
+			return interaction.reply('You needed setup your guild for get a register');
 		}
 
+		if (await UserExistsById(user.id, {'guild.id': interaction.guild.id})) {
+			return interaction.reply('Already Registered!');
+		}
+
+		await AssignRoleToUser(interaction, '[RPG-BOT] Player');
 		await Register(user, guild);
-		interaction.reply('Register Successfully!');
+
+		interaction.reply('You need setup your guild for get a  register');
+
 	}
 };
