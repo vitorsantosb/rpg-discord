@@ -41,6 +41,16 @@ async function ListGuildSessions(interaction) {
 	}).toArray();
 }
 
+async function SessionIsPublic(guildId, sessionName) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.countDocuments({
+		'name': sessionName,
+		'guild.id': guildId,
+		'isPublic': true,
+	}, {'_id': 1});
+}
+
 async function AddSessionMember(interaction, user, sessionName) {
 	const {collections} = await GetDatabase();
 
@@ -52,7 +62,8 @@ async function AddSessionMember(interaction, user, sessionName) {
 		}
 	});
 }
-async function DeleteSessionByName(guildId, sessionName){
+
+async function DeleteSessionByName(guildId, sessionName) {
 	const {collections} = await GetDatabase();
 
 	return collections.sessions.deleteOne(
@@ -77,5 +88,6 @@ module.exports = {
 	ListGuildSessions,
 	AddSessionMember,
 	ExistsUserInSession,
-	DeleteSessionByName
+	DeleteSessionByName,
+	SessionIsPublic
 };
