@@ -7,6 +7,7 @@ const {
 } = require('../repositories/roleManager.repository');
 const {SetupGuildFromInteraction, IsGuildSetupById} = require('../repositories/guild.repository');
 const {Lang} = require('../services/lang');
+const {GetFullUsername} = require('../services/user.service');
 
 
 module.exports = {
@@ -57,7 +58,7 @@ module.exports = {
 					]
 				});
 
-				interaction.reply(lang.setupEvent.setup_complete_reply(user.username, ownerRoleName));
+				interaction.reply(lang.setupEvent.setup_complete_reply(GetFullUsername(user), ownerRoleName));
 			}else if(custom_id === 'command_setup_cancel'){
 				interaction.reply(lang.setupEvent.cancel_setup);
 			}

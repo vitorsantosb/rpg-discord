@@ -17,7 +17,7 @@ module.exports = {
 			reply: 'Setup your bot',
 			setupEvent: {
 				isSetup: 'Guild is already setup!',
-				setup_complete_reply: (user, ownerRoleName) => `Setup Complete!!. The server owner ${user.username} receive the role "${ownerRoleName}". Good Game!!`,
+				setup_complete_reply: (userName, ownerRoleName) => `Setup Complete!!. The server owner ${userName} receive the role "${ownerRoleName}". Good Game!!`,
 				cancel_setup: 'Operation canceled'
 			}
 		},
@@ -70,7 +70,7 @@ module.exports = {
 				},
 			},
 			reply: {
-				game_master_complete: (user, interaction) => `This user ${GetFullUsername(user)} now is new RPG master by ${interaction.user.username + '#' + interaction.user.discriminator}`,
+				game_master_complete: (userName, interactionUser) => `This user ${userName} now is new RPG master by ${interactionUser}`,
 			}
 		},
 		addSessionMember: {
@@ -85,7 +85,7 @@ module.exports = {
 					description: 'Session name'
 				},
 			},
-			reply_message: (user, sessionName, interaction) => `New member ${GetFullUsername(user)} added on session ${sessionName} by GameMaster ${interaction.user.username + '#' + interaction.user.discriminator}`,
+			reply_message: (userName, sessionName, interactionUser) => `New member ${userName} added on session ${sessionName} by GameMaster ${interactionUser}`,
 			reply_fail: 'Session does not exists',
 		}
 

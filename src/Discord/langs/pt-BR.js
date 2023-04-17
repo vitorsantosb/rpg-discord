@@ -17,7 +17,7 @@ module.exports ={
 			reply: 'Configure seu bot',
 			setupEvent:{
 				isSetup: 'Este servidor já foi configurado!',
-				setup_complete_reply: (user, ownerRoleName) => `Configuração Finalizada!!. O dono do servidor ${user.username} recebeu o cargo ${ownerRoleName} Bom jogo!!`,
+				setup_complete_reply: (userName, ownerRoleName) => `Configuração Finalizada!!. O dono do servidor ${userName} recebeu o cargo ${ownerRoleName} Bom jogo!!`,
 				cancel_setup: 'Processo não permitido'
 			}
 		},
@@ -70,7 +70,7 @@ module.exports ={
 				},
 			},
 			reply: {
-				game_master_complete: (user, interaction) => `O membro ${GetFullUsername(user)} recebeu o cargo de GameMaster por: ${interaction.user.username + '#' + interaction.user.discriminator}`,
+				game_master_complete: (userName, interaction) => `O membro ${userName} recebeu o cargo de GameMaster por: ${interaction.user.username + '#' + interaction.user.discriminator}`,
 			}
 		},
 		addSessionMember: {
@@ -85,7 +85,7 @@ module.exports ={
 					description: 'Nome da sessão'
 				},
 			},
-			reply_message: (user, sessionName, interaction) => `Novo membro ${GetFullUsername(user)} foi adicionado a sessão ${sessionName} pelo GameMaster ${interaction.user.username + '#' + interaction.user.discriminator}`,
+			reply_message: (userName, sessionName, interactionUser) => `Novo membro ${userName} foi adicionado a sessão ${sessionName} pelo GameMaster ${interactionUser}`,
 			reply_fail: 'Sessão não existe',
 		}
 	}
