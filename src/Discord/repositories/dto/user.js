@@ -13,4 +13,4 @@ function CreateUserData (user, guild) {
 	};
 }
 
-module.exports = { CreateUserData }
+module.exports = { CreateUserData };

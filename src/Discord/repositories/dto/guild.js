@@ -10,7 +10,7 @@ function CreateGuildData(guild){
 }
 
 function CreateBasicGuildRef ({id, name}) {
-	return {id, name}
+	return {id, name};
 }
 
 module.exports = { CreateGuildData, CreateBasicGuildRef };
