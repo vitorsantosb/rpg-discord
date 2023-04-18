@@ -63,6 +63,22 @@ async function AddSessionMember(interaction, user, sessionName) {
 	});
 }
 
+async function RemoveSessionMember(guildId, memberId, sessionName) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne({
+		'guild.id': guildId,
+		'name': sessionName,
+
+	}, {
+		$pull: {
+			members: {
+				'user.id': memberId
+			}
+		}
+	});
+}
+
 async function DeleteSessionByName(guildId, sessionName) {
 	const {collections} = await GetDatabase();
 
@@ -78,7 +94,7 @@ async function ExistsUserInSession(user, sessionName) {
 
 	return collections.sessions.countDocuments({
 		'name': sessionName,
-		'members': user.id,
+		'members.user.id': user.id,
 	}, {'_id': 1});
 }
 
@@ -89,5 +105,6 @@ module.exports = {
 	AddSessionMember,
 	ExistsUserInSession,
 	DeleteSessionByName,
-	SessionIsPublic
+	SessionIsPublic,
+	RemoveSessionMember
 };
