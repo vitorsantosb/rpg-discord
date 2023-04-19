@@ -38,11 +38,9 @@ module.exports = {
 					const createdRole = await CreateRole(guild, role.name, role.permissions, role.badgeColor);
 
 					botRolesIds.push({
-						role: {
-							id: createdRole.id,
-							name: createdRole.name,
-							guildId: guild.id,
-						}
+						id: createdRole.id,
+						name: createdRole.name,
+						guildId: guild.id,
 					});
 				}
 
