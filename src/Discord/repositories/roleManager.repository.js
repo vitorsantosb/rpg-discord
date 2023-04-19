@@ -1,3 +1,5 @@
+const {GetDatabase} = require('../database/db');
+
 /**
  *
  * @param guild - interaction.Guild
@@ -20,29 +22,54 @@ function ExistsRoleInGuild(guild, roleName) {
 	return !!guild.roles.cache.find(role => role.name === roleName);
 }
 
-function FetchRoleInGuild(interaction, roleName) {
-	return interaction.guild.roles.cache.find(({name}) => name === roleName);
+function FetchRoleInGuild(guild, roleName) {
+	return guild.roles.cache.find(({name}) => name === roleName);
 }
 
-async function AssignRoleToUser(interaction, roleName) {
-	const role = FetchRoleInGuild(interaction, roleName);
+async function AssignRoleToUser(guild, user, roleName) {
+	const role = FetchRoleInGuild(guild, roleName);
 
-	const member = await interaction.guild.members.fetch(interaction.user.id);
+	const member = await guild.members.fetch(user.id);
 	await member.roles.add(role.id);
 }
 
-async function RemoveUserRole(interaction, roleName) {
-	const role = FetchRoleInGuild(interaction, roleName);
+//Needed hotfix
+async function RemoveUserRole(guild, user, roleName) {
+	const role = FetchRoleInGuild(guild, roleName);
+	const member = await guild.members.fetch(user.id);
 
-	if (interaction.user && !interaction.user.roles.cache.has(role.id)) {
-		await interaction.user.roles.remove(role.id);
+	if (member.roles.cache.some(role => role.name === roleName)) {
+		member.roles.remove(role.id);
 	}
 }
 
-async function DeleteGuildRole(interaction, roleName) {
-	const role = FetchRoleInGuild(interaction, roleName);
+async function ExistsRoleInUser(guild, user, roleName) {
+	const member = await guild.members.fetch(user.id);
 
-	return interaction.guild.roles.delete(role.id);
+	return member.roles.cache.some(role => role.name === roleName);
 }
 
-module.exports = {CreateRole, ExistsRoleInGuild, AssignRoleToUser, RemoveUserRole, FetchRoleInGuild, DeleteGuildRole};
+async function DeleteGuildRole(guild, roleName) {
+	const role = FetchRoleInGuild(guild, roleName);
+
+	return guild.roles.delete(role.id);
+}
+
+async function GetArrayOfBotRolesInGuild(guildId) {
+	const {collections} = await GetDatabase();
+
+	return collections.guilds.find({
+		'botRolesIds.role.guildId': guildId,
+	}).toArray();
+}
+
+module.exports = {
+	CreateRole,
+	ExistsRoleInGuild,
+	AssignRoleToUser,
+	RemoveUserRole,
+	FetchRoleInGuild,
+	DeleteGuildRole,
+	GetArrayOfBotRolesInGuild,
+	ExistsRoleInUser
+};

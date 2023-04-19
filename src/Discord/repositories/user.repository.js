@@ -42,12 +42,13 @@ async function StoreUser(user) {
 		JSON.parse(JSON.stringify(user))
 	);
 }
-async function UpdateUserForGameMaster(user_id, isEnable){
+
+async function UpdateUserForGameMaster(user_id, isMaster) {
 	const {collections} = await GetDatabase();
 
 	return collections.users.updateOne({'user.id': user_id}, {
-		$set:{
-			'isGameMaster': isEnable
+		$set: {
+			'isGameMaster': isMaster
 		}
 	});
 }

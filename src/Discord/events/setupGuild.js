@@ -32,15 +32,21 @@ module.exports = {
 
 				for (const role of roles) {
 					if (ExistsRoleInGuild(guild, role.name)) {
-						await DeleteGuildRole(interaction, role.name);
+						await DeleteGuildRole(interaction.guild, role.name);
 					}
 
 					const createdRole = await CreateRole(guild, role.name, role.permissions, role.badgeColor);
 
-					botRolesIds.push(createdRole.id);
+					botRolesIds.push({
+						role: {
+							id: createdRole.id,
+							name: createdRole.name,
+							guildId: guild.id,
+						}
+					});
 				}
 
-				await AssignRoleToUser(interaction, adminRole.name);
+				await AssignRoleToUser(interaction.guild, interaction.user, adminRole.name);
 
 				await SetupGuildFromInteraction(interaction, {botRolesIds});
 
