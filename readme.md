@@ -69,7 +69,7 @@ Em breve...
 # Versões e dependencias instaladas
 
 ```json linesn
-    "body-parser":  1.20.1
+"body-parser":  1.20.1
 "discord.js": 14.9.0
 "dotenv": 16.0.3
 "express": 4.18.2
@@ -81,7 +81,7 @@ Em breve...
 Dependencias de Desenvolvimento.
 
 ```json lines
-    "eslint":     8.30.0
+"eslint":     8.30.0
 "jest": 29.4.3
 "progress": 2.0.3
 ```
