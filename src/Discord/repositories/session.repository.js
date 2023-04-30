@@ -98,6 +98,17 @@ async function ExistsUserInSession(user, sessionName) {
 	}, {'_id': 1});
 }
 
+async function GetSessionMembers(guildId, sessionName) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.findOne({
+		'name': sessionName,
+		'members.guild.id': guildId
+	}, {
+		members: 1
+	});
+}
+
 module.exports = {
 	CreateSession,
 	SessionExists,
@@ -106,5 +117,6 @@ module.exports = {
 	ExistsUserInSession,
 	DeleteSessionByName,
 	SessionIsPublic,
-	RemoveSessionMember
+	RemoveSessionMember,
+	GetSessionMembers,
 };

@@ -6,6 +6,6 @@ module.exports = {
 	roles: [
 		admin,
 		gameMaster,
-		player
+		player,
 	],
 };
