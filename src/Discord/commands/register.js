@@ -28,7 +28,7 @@ module.exports = {
 		const {user, guild} = interaction;
 
 		if (!await IsGuildSetupById(guild.id)) {
-			return interaction.reply('You needed setup your guild for get a register');
+			return interaction.reply('You need to setup guild before register');
 		}
 
 		if (await UserExistsById(user.id, {'guild.id': interaction.guild.id})) {
@@ -38,7 +38,7 @@ module.exports = {
 		await AssignRoleToUser(interaction, '[RPG-BOT] Player');
 		await Register(user, guild);
 
-		interaction.reply('You need setup your guild for get a  register');
+		interaction.reply('You need setup your guild for get a register');
 
 	}
 };

@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
+const {Client, GatewayIntentBits, Collection} = require('discord.js');
 require('dotenv').config();
 const token = process.env.TOKEN;
 
@@ -41,16 +41,23 @@ async function LoadEvents(client) {
 }
 
 async function InitCommands() {
-	const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+	const client = new Client({
+		intents: [
+			GatewayIntentBits.Guilds,
+			GatewayIntentBits.GuildMessages,
+			GatewayIntentBits.DirectMessages,
+			GatewayIntentBits.MessageContent
+		],
+	});
 	client.commands = new Collection();
-    
+
 	LoadCommands(client);
 	await LoadEvents(client);
 
 	client.login(token);
 }
 
-module.exports = { InitCommands };
+module.exports = {InitCommands};
 
 
 

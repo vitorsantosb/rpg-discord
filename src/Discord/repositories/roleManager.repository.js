@@ -1,4 +1,6 @@
 const {GetDatabase} = require('../database/db');
+const {CreateSessionName} = require('../services/channel.service');
+const {PermissionsBitField} = require('discord.js');
 
 /**
  *
@@ -33,7 +35,12 @@ async function AssignRoleToUser(guild, user, roleName) {
 	await member.roles.add(role.id);
 }
 
-//Needed hotfix
+async function AssignRoleToUserWithId(guild, user, roleId) {
+	const member = await guild.members.fetch(user.id);
+
+	await member.roles.add(roleId);
+}
+
 async function RemoveUserRole(guild, user, roleName) {
 	const role = FetchRoleInGuild(guild, roleName);
 	const member = await guild.members.fetch(user.id);
@@ -63,6 +70,18 @@ async function GetArrayOfBotRolesInGuild(guildId) {
 	}).toArray();
 }
 
+async function CreateRoleWithSessionName(guild, roleName) {
+	return guild.roles.create({
+		name: CreateSessionName(roleName),
+		color: '22E73D',
+		mentionable: true,
+		permissions: [
+			PermissionsBitField.Flags.SendMessages,
+			PermissionsBitField.Flags.ReadMessageHistory
+		]
+	});
+}
+
 module.exports = {
 	CreateRole,
 	ExistsRoleInGuild,
@@ -71,5 +90,7 @@ module.exports = {
 	FetchRoleInGuild,
 	DeleteGuildRole,
 	GetArrayOfBotRolesInGuild,
-	ExistsRoleInUser
+	ExistsRoleInUser,
+	AssignRoleToUserWithId,
+	CreateRoleWithSessionName
 };
