@@ -1,12 +1,27 @@
 const {SlashCommandBuilder, ChannelType} = require('discord.js');
-const {SessionExists, GetSessionMembers} = require('../repositories/session.repository');
-const {CreateRoleWithSessionName, AssignRoleToUserWithId} = require('../repositories/roleManager.repository');
+const {
+	SessionExists,
+	GetSessionMembers,
+	UpdateSessionChannelsData,
+	UpdateSessionRole,
+	UpdateMemberRoleInSession
+} = require('../repositories/session.repository');
+const {
+	CreateRoleWithSessionName,
+	AssignRoleToUserWithId,
+	ExistsRoleInGuild,
+	DeleteGuildRole
+} = require('../repositories/roleManager.repository');
 const {
 	CreateSessionCategory,
 	CreateSessionTextChannel,
 	CreateSessionVoiceChannel
 } = require('../repositories/channel.repository');
-const {CreateSessionName, GetSessionChannels} = require('../services/channel.service');
+const {
+	CreateSessionName,
+	GetSessionChannels,
+	GetSessionRoleNameWithSessionName
+} = require('../services/channel.service');
 const {SetupArrayOfPermissionsOverwrites} = require('../config/channels');
 
 module.exports = {
@@ -27,44 +42,82 @@ module.exports = {
 		)),
 
 	async execute(interaction) {
-		const {guild, options} = interaction;
+		const {guild} = interaction;
+
 		interaction.deferReply();
 
 		const roles = [];
+		const channelsMap = [];
+
 		const sessionChannels = GetSessionChannels();
-		const sessionName = options.getString('session');
-		const everyone = options.getMentionable('everyone');
+		const sessionName = interaction.options.getString('session');
+		const everyone = interaction.options.getMentionable('everyone');
 
 		roles.push(everyone);
 
 		if (await SessionExists(interaction, sessionName)) {
+			if (ExistsRoleInGuild(guild, GetSessionRoleNameWithSessionName(sessionName))) {
+				await DeleteGuildRole(guild, GetSessionRoleNameWithSessionName(sessionName));
+			}
+
 			const sessionRole = await CreateRoleWithSessionName(guild, sessionName);
+			await UpdateSessionRole(guild.id, sessionName, {
+				id: sessionRole.id,
+				name: sessionRole.name,
+				guild: guild.id,
+			});
+
 			roles.push(sessionRole);
 
-			//Criar categoria
 			const category = await CreateSessionCategory(guild, CreateSessionName(sessionName), roles);
+			channelsMap.push({
+				id: category.id,
+				type: ChannelType.GuildCategory,
+				name: category.name,
+				guild: guild.id,
+			});
 
-			//Cria canais de texto e voz.
 			const permissionsOverwrites = SetupArrayOfPermissionsOverwrites(roles);
 
-			for (const channel of sessionChannels) {
-				if (channel.type === ChannelType.GuildText) {
-					await CreateSessionTextChannel(guild, channel.name, permissionsOverwrites, category.id);
+			try {
+
+				for (const channel of sessionChannels) {
+					if (channel.type === ChannelType.GuildText) {
+						let createdChannel = await CreateSessionTextChannel(guild, channel.name, permissionsOverwrites, category.id);
+						channelsMap.push({
+							id: createdChannel.id,
+							type: channel.type,
+							name: createdChannel.name,
+							guild: guild.id,
+						});
+					}
+					if (channel.type === ChannelType.GuildVoice) {
+						let createdChannel = await CreateSessionVoiceChannel(guild, channel.name, permissionsOverwrites, category.id);
+						channelsMap.push({
+							id: createdChannel.id,
+							type: channel.type,
+							name: createdChannel.name,
+							guild: guild.id,
+						});
+					}
 				}
-				if (channel.type === ChannelType.GuildVoice) {
-					await CreateSessionVoiceChannel(guild, channel.name, permissionsOverwrites, category.id);
-				}
-				//adicionar em um objeto todas as informações criadas.
+				await UpdateSessionChannelsData(guild.id, sessionName, channelsMap);
+			} catch (err) {
+				console.log(err);
+				return interaction.reply(err);
 			}
 
 			const session = await GetSessionMembers(guild.id, sessionName);
 
-			//Anexar a role criada aos membros da sessão.
-			for (const member of session.members) {
-				await AssignRoleToUserWithId(guild, member.user, sessionRole.id);
+			if (session?.members) {
+				return interaction.editReply({content: 'Categoria para jogo criada com sucesso! Adicione seus jogadores a sessão para começar a jogar!'});
 			}
 
-			return interaction.editReply({content: 'Categoria para jogo criada com sucesso!'});
+			for (const member of session.members) {
+				await AssignRoleToUserWithId(guild, member.user, sessionRole.id);
+				await UpdateMemberRoleInSession(guild.id, sessionName, member.user.id, sessionRole.id);
+			}
+			return interaction.editReply({content: 'Categoria para jogo criada com sucesso! Cargos foram anexados com sucesso!'});
 		}
 		return interaction.editReply({content: 'Falha na criação da sessão!'});
 	}

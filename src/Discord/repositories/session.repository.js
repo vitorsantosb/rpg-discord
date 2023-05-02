@@ -27,7 +27,10 @@ async function CreateSession(interaction) {
 		owner,
 
 		gameMaster: [owner],
-		members: []
+		members: [],
+		botChannels: [],
+		sessionRole: [],
+		isInitialized: false,
 	};
 
 	return collections.sessions.insertOne(session);
@@ -109,6 +112,71 @@ async function GetSessionMembers(guildId, sessionName) {
 	});
 }
 
+async function UpdateMemberRoleInSession(guildId, sessionName, memberId, roleId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne({
+		'name': sessionName,
+		'guild.id': guildId,
+
+	}, {
+		$push: {
+			members: {
+				'user.id': memberId,
+				'role': {
+					'id': roleId
+				}
+			}
+		}
+	});
+}
+
+async function UpdateSessionChannelsData(guildId, sessionName, createdBotChannels) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne({'name': sessionName}, {
+		$set: {
+			'botChannels': createdBotChannels
+		}
+	});
+}
+
+async function UpdateSessionRole(guildId, sessionName, roleId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne(
+		{
+			'name': sessionName,
+			'guild.id': guildId
+		},
+		{
+			$push: {
+				'sessionRole': roleId
+			}
+		});
+}
+
+async function GetSessionChannelsId(sessionName, guildId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.findOne({
+		'name': sessionName,
+		'guild.id': guildId
+	}, {
+		botChannels: 1
+	});
+}
+
+async function DeleteSessionChannelInDb(sessionName, guildId, channelId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.deleteOne({
+		'name': sessionName,
+		'guild.id': guildId,
+		'botChannels.id': channelId
+	});
+}
+
 module.exports = {
 	CreateSession,
 	SessionExists,
@@ -119,4 +187,9 @@ module.exports = {
 	SessionIsPublic,
 	RemoveSessionMember,
 	GetSessionMembers,
+	UpdateSessionChannelsData,
+	UpdateSessionRole,
+	UpdateMemberRoleInSession,
+	GetSessionChannelsId,
+	DeleteSessionChannelInDb
 };

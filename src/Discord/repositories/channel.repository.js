@@ -4,9 +4,8 @@ const {ChannelType} = require('discord.js');
  *
  * @param guild
  * @param channelName
- * @param type
+ * @param permissionsOverwrites
  * @param parent
- * @param roles
  * @returns {Promise<void>}
  * @constructor
  */
@@ -43,9 +42,15 @@ async function CreateSessionCategory(guild, channelName, permissionsOverwrites, 
 	});
 }
 
-async function DeleteSessionChannel() {
-
+async function DeleteSessionChannelWithId(sessionName, guild, channelId,) {
+	const fetchedChannel = guild.channels.cache.get(channelId);
+	fetchedChannel.delete();
 }
 
 
-module.exports = {CreateSessionTextChannel, DeleteSessionChannel, CreateSessionCategory, CreateSessionVoiceChannel};
+module.exports = {
+	CreateSessionTextChannel,
+	DeleteSessionChannelWithId,
+	CreateSessionCategory,
+	CreateSessionVoiceChannel
+};
