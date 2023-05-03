@@ -1,36 +1,73 @@
-const db = require("../../lib/database/database.js");
+const { GetDatabase } = require('../database/db');
 
+/**
+ *
+ * @param userId
+ * @param filter
+ * @returns {Promise<>}
+ * @constructor
+ */
+async function DeleteUserById(userId, filter={}) {
+	const {collections} = await GetDatabase();
 
-async function DeleteUserById(user_id) {
-    let rows = await db.GetDatabase();
-
-    const user_index = rows.findIndex(row => row.user.id == user_id);
-
-    if (user_index > -1) {
-        rows.splice(user_index, 1);
-    }
-
-    await db.SaveDatabase(rows);
-
+	return collections.users.deleteOne({
+		'user.id': userId,
+		...filter
+	});
 }
 
-async function FetchUserDataById(user_id) {
-    const rows = await db.GetDatabase();
+/**
+ *
+ * @param userId
+ * @param filter filter options
+ * @returns {Promise<number>}
+ * @constructor
+ */
+async function UserExistsById(userId, filter={}) {
+	const {collections} = await GetDatabase();
 
-    for (const row of rows) {
-        if (row.user.id == user_id) {
-            return true;
-        }
-    }
-
-    return false;
+	return collections.users.countDocuments({'user.id': userId, ...filter}, {'_id' : 1});
 }
 
-async function AddNewUser(user, rows) {
+async function FetchUserDataById(userId) {
+	const {collections} = await GetDatabase();
 
-    rows.push(user);
-
-    await db.SaveDatabase(rows);
+	return collections.users.findOne({'user.id': userId});
 }
 
-module.exports = { DeleteUserById, FetchUserDataById, AddNewUser }
+async function StoreUser(user) {
+	const {collections} = await GetDatabase();
+
+	return collections.users.insertOne(
+		JSON.parse(JSON.stringify(user))
+	);
+}
+
+async function UpdateUserForGameMaster(user_id, isMaster) {
+	const {collections} = await GetDatabase();
+
+	return collections.users.updateOne({'user.id': user_id}, {
+		$set: {
+			'isGameMaster': isMaster
+		}
+	});
+}
+
+async function SaveDiceHistory(userId, diceRoll) {
+	const {collections} = await GetDatabase();
+
+	return collections.users.updateOne({'user.id': userId}, {
+		$push: {
+			'rolls': {
+				$each: [diceRoll], 
+				$slice: -10
+			}
+		}
+	});
+}
+
+// eslint-disable-next-line no-undef
+module.exports = {
+	DeleteUserById, FetchUserDataById, StoreUser, UserExistsById,
+	SaveDiceHistory, UpdateUserForGameMaster
+};

@@ -1,11 +1,11 @@
-const { initCommands } = require("./src/Discord/init");
-const { initDiscordServer } = require("./src/server/server");
+const { InitCommands } = require('./src/Discord/init');
+const {SetupLangFiles} = require('./src/Discord/services/lang');
 
 async function init() {
-    await initDiscordServer();
-    await initCommands();
+	await SetupLangFiles();
+	await InitCommands();
 }
 
 init().catch(function(err){
-    console.log(err);
+	console.log(err);
 });

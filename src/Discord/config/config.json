@@ -1,0 +1,11 @@
+{
+  "bot": {
+    "name": "Miyuki Shiba",
+    "thumbnail": "https://pbs.twimg.com/media/E0LpVwFUUAMsMNE?format=jpg&name=large",
+    "embedColor": "#0099FF"
+  },
+  "channels": {
+    "role_color": "#b6ff00"
+  },
+  "roleNamePrefix": "[RPG-BOT]"
+}
