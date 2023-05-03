@@ -4,7 +4,7 @@ const {
 	GetSessionMembers,
 	UpdateSessionChannelsData,
 	UpdateSessionRole,
-	UpdateMemberRoleInSession
+	UpdateMemberRoleInSession, UpdateInitializedStatus, CheckSessionInitializedStatus
 } = require('../repositories/session.repository');
 const {
 	CreateRoleWithSessionName,
@@ -44,8 +44,6 @@ module.exports = {
 	async execute(interaction) {
 		const {guild} = interaction;
 
-		interaction.deferReply();
-
 		const roles = [];
 		const channelsMap = [];
 
@@ -56,6 +54,12 @@ module.exports = {
 		roles.push(everyone);
 
 		if (await SessionExists(interaction, sessionName)) {
+			if (await CheckSessionInitializedStatus(sessionName, guild.id)) {
+				return interaction.reply({content: 'This session has been initialized', ephemeral: true});
+			}
+
+			interaction.deferReply();
+
 			if (ExistsRoleInGuild(guild, GetSessionRoleNameWithSessionName(sessionName))) {
 				await DeleteGuildRole(guild, GetSessionRoleNameWithSessionName(sessionName));
 			}
@@ -110,14 +114,17 @@ module.exports = {
 			const session = await GetSessionMembers(guild.id, sessionName);
 
 			if (session?.members) {
-				return interaction.editReply({content: 'Categoria para jogo criada com sucesso! Adicione seus jogadores a sessão para começar a jogar!'});
-			}
+				for (const member of session.members) {
+					await AssignRoleToUserWithId(guild, member.user, sessionRole.id);
+					await UpdateMemberRoleInSession(guild.id, sessionName, member.user.id, sessionRole.id);
+				}
+				await UpdateInitializedStatus(sessionName, guild.id, true);
 
-			for (const member of session.members) {
-				await AssignRoleToUserWithId(guild, member.user, sessionRole.id);
-				await UpdateMemberRoleInSession(guild.id, sessionName, member.user.id, sessionRole.id);
+				return interaction.editReply({content: 'Categoria para jogo criada com sucesso! Cargos foram anexados com sucesso!'});
 			}
-			return interaction.editReply({content: 'Categoria para jogo criada com sucesso! Cargos foram anexados com sucesso!'});
+			await UpdateInitializedStatus(sessionName, guild.id, true);
+
+			return interaction.editReply({content: 'Categoria para jogo criada com sucesso! Adicione seus jogadores a sessão para começar a jogar!'});
 		}
 		return interaction.editReply({content: 'Falha na criação da sessão!'});
 	}

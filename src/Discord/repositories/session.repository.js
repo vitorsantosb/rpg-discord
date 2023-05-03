@@ -167,15 +167,62 @@ async function GetSessionChannelsId(sessionName, guildId) {
 	});
 }
 
-async function DeleteSessionChannelInDb(sessionName, guildId, channelId) {
+async function DeleteSessionChannelInDb(sessionName, guildId, roleId) {
 	const {collections} = await GetDatabase();
 
-	return collections.sessions.deleteOne({
-		'name': sessionName,
+	return collections.sessions.updateOne({
 		'guild.id': guildId,
-		'botChannels.id': channelId
+		'name': sessionName,
+
+	}, {
+		$pull: {
+			botChannels: {
+				'id': roleId
+			}
+		}
 	});
 }
+
+async function DeleteSessionRoleInDbWithId(sessionName, guildId, roleId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne({
+		'guild.id': guildId,
+		'name': sessionName,
+
+	}, {
+		$pull: {
+			sessionRole: {
+				'id': roleId
+			}
+		}
+	});
+}
+
+async function UpdateInitializedStatus(sessionName, guildId, isInitialized) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne({
+		'name': sessionName,
+		'guild.id': guildId
+
+	}, {
+		$set: {
+			'isInitialized': isInitialized
+		}
+	});
+}
+
+async function CheckSessionInitializedStatus(sessionName, guildId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.countDocuments({
+		'name': sessionName,
+		'guild.id': guildId,
+		'isInitialized': true,
+	}, {'_id': 1});
+}
+
 
 module.exports = {
 	CreateSession,
@@ -191,5 +238,8 @@ module.exports = {
 	UpdateSessionRole,
 	UpdateMemberRoleInSession,
 	GetSessionChannelsId,
-	DeleteSessionChannelInDb
+	DeleteSessionChannelInDb,
+	DeleteSessionRoleInDbWithId,
+	UpdateInitializedStatus,
+	CheckSessionInitializedStatus
 };

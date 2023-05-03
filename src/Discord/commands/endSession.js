@@ -3,7 +3,7 @@ const {
 	SessionExists,
 	GetSessionChannelsId,
 	DeleteSessionChannelInDb,
-	DeleteSessionByName
+	DeleteSessionByName, UpdateInitializedStatus, DeleteSessionRoleInDbWithId
 } = require('../repositories/session.repository');
 const {DeleteSessionChannelWithId} = require('../repositories/channel.repository');
 
@@ -29,7 +29,7 @@ module.exports = {
 		const {guild} = interaction;
 
 		const sessionName = interaction.options.getString('session');
-		const deleteSession = interaction.options.getBoolean('delete_session');
+		const deleteSession = interaction.options.getBoolean('delete_session') ?? false;
 
 		if (await SessionExists(interaction, sessionName)) {
 			const session = await GetSessionChannelsId(sessionName, guild.id);
@@ -39,10 +39,15 @@ module.exports = {
 				await DeleteSessionChannelInDb(sessionName, guild.id, channel.id);
 			}
 
+			await UpdateInitializedStatus(sessionName, guild.id, false);
+
 			if (deleteSession) {
 				await DeleteSessionByName(guild.id, sessionName);
+				await DeleteSessionRoleInDbWithId(sessionName, guild.id, session.sessionRole.id);
+
 				return interaction.reply('Session has been deleted successfully and all channels is deleted');
 			}
+
 			return interaction.reply('All session channels deleted successfully');
 		}
 		return interaction.reply('Failure for delete session');
