@@ -223,6 +223,19 @@ async function CheckSessionInitializedStatus(sessionName, guildId) {
 	}, {'_id': 1});
 }
 
+async function GetSessionRoleId(sessionName, guildId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.findOne({
+		'name': sessionName,
+		'guild.id': guildId
+	}, {
+		sessionRole: {
+			id: 1
+		}
+	});
+}
+
 
 module.exports = {
 	CreateSession,
@@ -241,5 +254,6 @@ module.exports = {
 	DeleteSessionChannelInDb,
 	DeleteSessionRoleInDbWithId,
 	UpdateInitializedStatus,
-	CheckSessionInitializedStatus
+	CheckSessionInitializedStatus,
+	GetSessionRoleId
 };

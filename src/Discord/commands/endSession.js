@@ -6,6 +6,8 @@ const {
 	DeleteSessionByName, UpdateInitializedStatus, DeleteSessionRoleInDbWithId
 } = require('../repositories/session.repository');
 const {DeleteSessionChannelWithId} = require('../repositories/channel.repository');
+const {DeleteGuildRole} = require('../repositories/roleManager.repository');
+const {GetSessionRoleNameWithSessionName} = require('../services/channel.service');
 
 
 module.exports = {
@@ -44,6 +46,7 @@ module.exports = {
 			if (deleteSession) {
 				await DeleteSessionByName(guild.id, sessionName);
 				await DeleteSessionRoleInDbWithId(sessionName, guild.id, session.sessionRole.id);
+				await DeleteGuildRole(guild, GetSessionRoleNameWithSessionName(sessionName));
 
 				return interaction.reply('Session has been deleted successfully and all channels is deleted');
 			}
