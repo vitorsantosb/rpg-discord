@@ -55,7 +55,7 @@ Update bot documentation
 
 **Tradução Status**
 
-| Idioma | Total tradudizo nos arquivos lang |
+| Idioma | Total traduzido nos arquivos lang |
 |--------|-----------------------------------|
 | PT-BR  | 70%                               |
 | EN-US  | 70%                               | 

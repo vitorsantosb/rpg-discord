@@ -40,7 +40,7 @@ async function ListGuildSessions(interaction) {
 	const {collections} = await GetDatabase();
 
 	return collections.sessions.find({
-		'owner.guild.id': interaction.guild.id.toString()
+		'guild.id': interaction.guild.id.toString()
 	}).toArray();
 }
 

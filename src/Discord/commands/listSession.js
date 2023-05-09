@@ -3,27 +3,6 @@ const {ListGuildSessions} = require('../repositories/session.repository');
 const {GetFullUsername} = require('../services/user.service');
 const {bot} = require('../config/config.json');
 
-function CreateEmbedForSession(session) {
-	return new EmbedBuilder()
-		.setColor(bot.embedColor)
-		.addFields([
-			{
-				name: 'Sessions',
-				value: session.name,
-				inline: true
-			},
-			{
-				name: 'Session Owner',
-				value: GetFullUsername(session.owner.user),
-				inline: true
-			},
-			{
-				name: 'Slots Available',
-				value: (session.maxMemberCount - session.members.length) + '/' + session.maxMemberCount,
-				inline: true
-			}
-		]);
-}
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -33,8 +12,38 @@ module.exports = {
 	async execute(interaction) {
 		const sessions = await ListGuildSessions(interaction);
 
-		const embeds = sessions.map(CreateEmbedForSession);
+		if (sessions <= 1) {
+			return interaction.reply('Não há sessões criadas nesse servidor');
+		}
+		const embed = new EmbedBuilder()
+			.setTitle('Guild Sessions')
+			.setColor(bot.embedColor);
 
-		interaction.reply({embeds});
+		const arrayOfSessions = [];
+
+		for (const session of sessions) {
+			arrayOfSessions.push({
+					name: 'session',
+					value: session.name,
+					inline: true
+				},
+				{
+					name: 'session owner',
+					value: `${GetFullUsername(session.owner.user)}`,
+					inline: true
+				}, {
+					name: 'slots available',
+					value: (session.maxMemberCount - session.members.length) + '/' + session.maxMemberCount,
+					inline: true
+				});
+		}
+
+		embed.addFields(arrayOfSessions);
+
+		interaction.reply({embeds: [embed]});
+
 	},
 };
+
+
+
