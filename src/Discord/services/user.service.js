@@ -1,5 +1,5 @@
 function GetFullUsername(user){
-	return user.tag;
+	return user.username + '#' + user.discriminator;
 }
 
 module.exports = { GetFullUsername };

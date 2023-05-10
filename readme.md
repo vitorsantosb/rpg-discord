@@ -19,21 +19,46 @@ conterá as seguintes interações.
 
 ###### Comandos
 
-```markdown
-    addSessionMember    -          Adicionar membro a uma sessão.
-    bodyDice            -          Rolagem de dado de partes do corpo.
-    createSession       -          Criação de uma sessão de até 5 pessoas.
-    deleteSession       -          Deleta uma sessão existente caso seja o dono/administrador do bot.
-    deleteUser          -          Remove um usuário do cadastro da aplicação.
-    initSession         -          WORKING IN PROGRESS.
-    joinSession         -          O membro do servidor entra em uma sessão de RPG.
-    listSession         -          Retorna a lista de todas as sessões de existentes para o servidor presente.
-    register            -          Registra um membro da servidor como um jogador ou mestrante do servidor
-    removeSessionMember -          Remove um membro da guild de uma sessão.
-    rolls               -          Rola um dado selecionado aleatoriamente.
-    setGameMaster       -          Defini um membro do discord como GameMaster do RPG.
-    setup               -          Configura o seu servidor automaticamente para que o bot possa ser utilizado.
-```
+**New Commands:**
+
+| Comando             | habilitado | code-status | HotFix | embed-status | tradução | descrição                                                                                       |
+|---------------------|------------|-------------|--------|--------------|----------|-------------------------------------------------------------------------------------------------|
+| addSessionMember    | sim        | incompleto  | não    | incompleto   | não      | Adicionar membro a uma sessão                                                                   
+| bodyDice            | sim        | completo    | não    | incompleto   | não      | Rolagem de dado de partes do corpo.                                                             
+| createSession       | sim        | completo    | não    | incompleto   | não      | Criação de uma sessão de até 5 pessoas.                                                         
+| deleteSession       | sim        | incompleto  | não    | incompleto   | não      | Deleta uma sessão existente caso seja o dono/administrador do bot.                              
+| deleteUser          | sim        | completo    | não    | incompleto   | não      | Remove um usuário do cadastro da aplicação.                                                     
+| endSession          | sim        | completo    | não    | incompleto   | não      | Termina uma sessão deletando as salas no discord dos membros ou deletando a sessão por completo 
+| initSession         | sim        | completo    | não    | incompleto   | não      | Inicia uma sessão criando as salas no discord para os membros e mestrante                       
+| joinSession         | sim        | incompleto  | sim    | incompleto   | não      | O membro do servidor entra em uma sessão de RPG.                                                
+| listSession         | sim        | incompleto  | sim    | incompleto   | não      | Retorna a lista de todas as sessões de existentes para o servidor presente.                     
+| ping                | sim        | completo    | não    | incompleto   | não      | Comando de ping                                                                                 
+| register            | sim        | completo    | não    | incompleto   | não      | Registra um membro da servidor como um jogador ou mestrante do servidor                         
+| removeSessionMember | sim        | incompleto  | não    | incompleto   | não      | Remove um membro da guild de uma sessão.                                                        
+| setup               | sim        | completo    | não    | Completo     | não      | Configura o seu servidor automaticamente para que o bot possa ser utilizado.                    
+| rolls               | sim        | completo    | não    | incompleto   | não      | Rola um dado selecionado aleatoriamente.                                                        
+
+**Created new repositores and DTO's**
+| Repository | implementado |
+|--------|--------|
+| channel | sim|
+| guild | sim |
+| message | não |
+| roleManager | sim |
+| session | sim |
+| user | sim |
+
+- Created Services.
+- Config folder
+
+Update bot documentation
+
+**Tradução Status**
+
+| Idioma | Total traduzido nos arquivos lang |
+|--------|-----------------------------------|
+| PT-BR  | 70%                               |
+| EN-US  | 70%                               | 
 
 ###### Internacilização da aplicação
 

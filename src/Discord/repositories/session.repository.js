@@ -40,7 +40,7 @@ async function ListGuildSessions(interaction) {
 	const {collections} = await GetDatabase();
 
 	return collections.sessions.find({
-		'owner.guild.id': interaction.guild.id.toString()
+		'guild.id': interaction.guild.id.toString()
 	}).toArray();
 }
 
@@ -118,15 +118,10 @@ async function UpdateMemberRoleInSession(guildId, sessionName, memberId, roleId)
 	return collections.sessions.updateOne({
 		'name': sessionName,
 		'guild.id': guildId,
-
+		'members.user.id': memberId
 	}, {
-		$push: {
-			members: {
-				'user.id': memberId,
-				'role': {
-					'id': roleId
-				}
-			}
+		$set: {
+			'members.$.role.id': roleId
 		}
 	});
 }
@@ -187,9 +182,8 @@ async function DeleteSessionRoleInDbWithId(sessionName, guildId, roleId) {
 	const {collections} = await GetDatabase();
 
 	return collections.sessions.updateOne({
-		'guild.id': guildId,
 		'name': sessionName,
-
+		'guild.id': guildId,
 	}, {
 		$pull: {
 			sessionRole: {
@@ -223,6 +217,36 @@ async function CheckSessionInitializedStatus(sessionName, guildId) {
 	}, {'_id': 1});
 }
 
+async function GetSessionRoleId(sessionName, guildId) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.findOne({
+		'name': sessionName,
+		'guild.id': guildId
+	}, {
+		sessionRole: {
+			id: 1
+		}
+	});
+}
+
+async function SaveDiceHistoryOnSessionUser(guildId, sessionName, user, diceRoll) {
+	const {collections} = await GetDatabase();
+
+	return collections.sessions.updateOne(
+		{
+			'name': sessionName,
+			'guild.id': guildId,
+			'members.user.id': user.id,
+		}, {
+			$push: {
+				'members.$.rolls': {
+					$each: [diceRoll],
+					$slice: -10
+				},
+			}
+		});
+}
 
 module.exports = {
 	CreateSession,
@@ -241,5 +265,7 @@ module.exports = {
 	DeleteSessionChannelInDb,
 	DeleteSessionRoleInDbWithId,
 	UpdateInitializedStatus,
-	CheckSessionInitializedStatus
+	CheckSessionInitializedStatus,
+	GetSessionRoleId,
+	SaveDiceHistoryOnSessionUser
 };
