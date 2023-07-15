@@ -25,7 +25,7 @@ function ExistsRoleInGuild(guild, roleName) {
 }
 
 function FetchRoleInGuild(guild, roleName) {
-	return guild.roles.cache.find(({name}) => name === roleName);
+	return guild.roles.fetch(({name}) => name === roleName);
 }
 
 async function AssignRoleToUser(guild, user, roleName) {

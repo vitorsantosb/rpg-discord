@@ -10,6 +10,7 @@
   "author": "Vitor Batista",
   "license": "MIT",
   "dependencies": {
+    "axios": "^1.4.0",
     "body-parser": "^1.20.1",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
