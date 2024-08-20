@@ -24,12 +24,12 @@ function ExistsRoleInGuild(guild, roleName) {
 	return !!guild.roles.cache.find(role => role.name === roleName);
 }
 
-function FetchRoleInGuild(guild, roleName) {
-	return guild.roles.cache.find(({name}) => name === roleName);
+async function FetchRoleInGuild(guild, roleName) {
+	return await guild.roles.cache.find(({name}) => name === roleName);
 }
 
 async function AssignRoleToUser(guild, user, roleName) {
-	const role = FetchRoleInGuild(guild, roleName);
+	const role = await FetchRoleInGuild(guild, roleName);
 
 	const member = await guild.members.fetch(user.id);
 	await member.roles.add(role.id);
@@ -57,7 +57,9 @@ async function ExistsRoleInUser(guild, user, roleName) {
 }
 
 async function DeleteGuildRole(guild, roleName) {
-	const role = FetchRoleInGuild(guild, roleName);
+	const role = await FetchRoleInGuild(guild, roleName);
+
+	console.log('Fetched guild role: ' + role);
 
 	return guild.roles.delete(role.id);
 }
